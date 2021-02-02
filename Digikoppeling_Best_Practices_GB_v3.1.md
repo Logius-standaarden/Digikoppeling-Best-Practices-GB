@@ -1,4 +1,101 @@
+Colofon
+
+| Logius Servicecentrum:  | Postbus 96810 2509 JE Den Haag  t. 0900 555 4555 (10 ct p/m) e. [servicecentrum@logius.nl](mailto:servicecentrum@logius.nl)   |
+|-------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+|                         |                                                                                                                               |
+
+Documentbeheer
+
+| Datum      | Versie | Auteur | Opmerkingen                                     |
+|------------|--------|--------|-------------------------------------------------|
+| 04-10-2012 | 1.0    | Logius | -                                               |
+| 10-06-2014 | 1.1    | Logius | Redactioneel bijwerken                          |
+| 13-01-2015 | 3.0    | Logius | Verwijderen dubbelingen met koppelvlakstandaard |
+| 01-10-2017 | 3.1    | Logius | Begrippen ebMS2 en CPA Register                 |
+|            |        |        |                                                 |
+|            |        |        |                                                 |
+|            |        |        |                                                 |
+|            |        |        |                                                 |
+|            |        |        |                                                 |
+
+Inhoud
+
+[1	Inleiding	4](#_Toc496079912)
+
+>   [1.1	Doel en doelgroep	4](#_Toc496079913)
+
+>   [1.2	Opbouw Digikoppeling documentatie	4](#_Toc496079914)
+
+>   [1.3	Doel en scope van Digikoppeling	5](#_Toc496079915)
+
+>   [1.3.1	Leidend principe	5](#_Toc496079916)
+
+>   [1.4	Koppelvlak & koppelvlakstandaard	5](#_Toc496079917)
+
+>   [1.4.1	Specificatie van de koppelvlakstandaard	6](#_Toc496079918)
+
+>   [1.5	Opbouw van dit document	6](#_Toc496079919)
+
+[2	Best Practices	7](#_Toc496079920)
+
+>   [2.1	Inleiding	7](#_Toc496079921)
+
+>   [2.2	Interactiepatronen	7](#_Toc496079922)
+
+>   [2.2.1	Halen	7](#_Toc496079923)
+
+>   [2.2.2	Brengen	8](#_Toc496079924)
+
+>   [2.3	Metadata	9](#_Toc496079925)
+
+>   [2.3.1	Location URL	9](#_Toc496079926)
+
+>   [2.3.2	Bestandsnaam	9](#_Toc496079927)
+
+>   [2.3.3	Metadata als deel van een bericht	10](#_Toc496079928)
+
+>   [2.3.4	Meerdere bestanden in één bericht	12](#_Toc496079929)
+
+>   [2.3.5	Geldigheidsduur	12](#_Toc496079930)
+
+>   [2.3.6	Context	13](#_Toc496079931)
+
+>   [2.4	Reliability	14](#_Toc496079932)
+
+>   [2.4.1	Retry strategie	14](#_Toc496079933)
+
+>   [2.4.2	Foutafhandeling	14](#_Toc496079934)
+
+>   [2.5	Security	15](#_Toc496079935)
+
+>   [2.5.1	OIN en certificaten	15](#_Toc496079936)
+
+>   [2.5.2	Server configuration	16](#_Toc496079937)
+
+>   [2.6	Intermediairs	17](#_Toc496079938)
+
+>   [2.6.1	Niet-transparant	18](#_Toc496079939)
+
+>   [2.6.2	Transparant	18](#_Toc496079940)
+
+>   [2.7	NATting	19](#_Toc496079941)
+
+[3	Use cases	20](#_Toc496079942)
+
+>   [3.1	Download	20](#_Toc496079943)
+
+>   [3.2	Selectie	20](#_Toc496079944)
+
+>   [3.3	Verzending	21](#_Toc496079945)
+
+>   [3.4	Multi-distributie	22](#_Toc496079946)
+
+>   [3.5	Upload	23](#_Toc496079947)
+
+>   [3.6	Business voorbeelden	24](#_Toc496079948)
+
 # Inleiding
+
 ## Doel en doelgroep
 
 Dit document beschrijft een aantal Best Practices voor de DigiKoppeling Grote Berichten.
@@ -6,7 +103,7 @@ Dit document beschrijft een aantal Best Practices voor de DigiKoppeling Grote Be
 Het document is bestemd voor architecten en ontwikkelaars die op basis van DigiKoppeling Grote Berichten gegevens willen uitwisselen. Zie onderstaande tabel bij welke taken dit document ondersteunt. De koppelvlakstandaard Grote Berichten beschrijft verplichtingen voor het toepassen van Grote Berichten. Dit document is een aanvulling hierop en heeft tot doel ontwikkelaars te informeren en adviseren over de te volgen werkwijze bij het toepassen van de Koppelvlakstandaard Grote Berichten.
 
 | Afkorting | Rol                             | Taak                                                                                                       | Doelgroep? |
-| --- |---------------------------------| --- |------------|
+|-----------|---------------------------------|------------------------------------------------------------------------------------------------------------|------------|
 | [MT]      | Management                      | Bevoegdheid om namens organisatie (strategische) besluiten te nemen.                                       | **Nee**    |
 | [PL]      | Projectleiding                  | Verzorgen van de aansturing van projecten.                                                                 | **Nee**    |
 | [A&D]     | Analyseren & ontwerpen (design) | Analyseren en ontwerpen van oplossings-richtingen. Het verbinden van Business aan de IT.                   | **Nee**    |
@@ -16,18 +113,18 @@ Het document is bestemd voor architecten en ontwikkelaars die op basis van DigiK
 
 Digikoppeling is beschreven in een set van documenten. Deze set is als volgt opgebouwd:
 
-![Opbouw documentatie Digikoppeling](media/DK_Specificatie_structuur.png "Opbouw documentatie Digikoppeling")
+Figuur 1: Opbouw documentatie Digikoppeling
 
 ## Doel en scope van Digikoppeling
 
 DigiKoppeling biedt de mogelijkheid om op een sterk gestandaardiseerde wijze berichten uit te wisselen tussen service aanbieders en service afnemers. De uitwisseling tussen partijen wordt in drie lagen opgedeeld:
 
-- Inhoud: Op deze laag worden de afspraken gemaakt over de inhoud van het uit te wisselen bericht, dus de structuur, semantiek en waardebereiken.  
+-   Inhoud: Op deze laag worden de afspraken gemaakt over de inhoud van het uit te wisselen bericht, dus de structuur, semantiek en waardebereiken.  
     DigiKoppeling houdt zich **niet** met de inhoud bezig, ‘heeft geen boodschap aan de boodschap’.
 
-- Logistiek: Op deze laag bevinden zich de afspraken betreffende transportprotocollen (HTTP), messaging (SOAP), beveiliging (authenticatie en encryptie) en betrouwbaarheid. **Dit is de DigiKoppeling-laag.**
+-   Logistiek: Op deze laag bevinden zich de afspraken betreffende transportprotocollen (HTTP), messaging (SOAP), beveiliging (authenticatie en encryptie) en betrouwbaarheid. **Dit is de DigiKoppeling-laag.**
 
-- Transport: deze laag verzorgt het daadwerkelijke transport van het bericht.
+-   Transport: deze laag verzorgt het daadwerkelijke transport van het bericht.
 
 DigiKoppeling richt zich dus uitsluitend op de logistieke laag. Deze afspraken staan in de koppelvlakstandaards en andere voorzieningen. In het geval van WUS en ebMS2 komt de logistieke laag overeen met de ‘header’ van het bericht en gaat de ‘body’ uitsluitend over de inhoud. In het geval van Digikoppeling Grote Berichten is een deel van de logistieke informatie opgenomen in de ‘body’ van het bericht in de vorm van gestandaardiseerde meta-data.
 
@@ -63,9 +160,9 @@ DigiKoppeling koppelvlakdefinitie (Raamwerk Specificatie genoemd)
 
 bestaat uit:
 
-- interfacedefinitie “on the wire”, (voorbeeld)listing van SOAP headers, en
+-   interfacedefinitie “on the wire”, (voorbeeld)listing van SOAP headers, en
 
-- informatie over velden en hun specifieke inhoud.
+-   informatie over velden en hun specifieke inhoud.
 
 ## Opbouw van dit document
 
@@ -83,11 +180,11 @@ De situatie kan zich voordoen dat een WUS en/of ebMS2 bericht een grootte krijgt
 
 De volgende standaard aanpak wordt hierbij gehanteerd:
 
-- De verzender stelt een bestand samen uit (een deel van) de gegevens die normaliter in het “grote bericht” verzonden zou worden. Het resultaat wordt aangeduid met de term “groot bestand”. Merk op dat dit ook een “groot” xml bestand kan zijn, een CAD bestand, een PDF document, een ZIP bestand, et cetera.
+-   De verzender stelt een bestand samen uit (een deel van) de gegevens die normaliter in het “grote bericht” verzonden zou worden. Het resultaat wordt aangeduid met de term “groot bestand”. Merk op dat dit ook een “groot” xml bestand kan zijn, een CAD bestand, een PDF document, een ZIP bestand, et cetera.
 
-- De verzender stelt metadata samen over het grote bestand en verstuurt deze metadata in een WUS- of ebMS2-bericht [in een zgn. stuurbericht]. Merk op dat het stuurbericht naast metadata ook voorzien kan zijn van inhoudelijke informatie die al nodig is bij ontvangst van het bericht voorafgaand aan het nog op te halen grote bestand.
+-   De verzender stelt metadata samen over het grote bestand en verstuurt deze metadata in een WUS- of ebMS2-bericht [in een zgn. stuurbericht]. Merk op dat het stuurbericht naast metadata ook voorzien kan zijn van inhoudelijke informatie die al nodig is bij ontvangst van het bericht voorafgaand aan het nog op te halen grote bestand.
 
-- De ontvanger haalt het grote bestand op via het gespecificeerde HTTP 1.1 protocol op basis van de verstrekte metadata (zoals in de koppelvlakstandaard is gespecificeerd). De bestandsoverdracht is niet “betrouwbaar”; indien dit wel gewenst is, dient de ontvanger aanvullende maatregelen te implementeren (retry-mechnisme, foutafhandeling). De Koppelvlakstandaard bevat hiervoor handvatten. Toepassing van deze handvatten in concrete implementaties vallen buiten de scope van het koppelvlak.
+-   De ontvanger haalt het grote bestand op via het gespecificeerde HTTP 1.1 protocol op basis van de verstrekte metadata (zoals in de koppelvlakstandaard is gespecificeerd). De bestandsoverdracht is niet “betrouwbaar”; indien dit wel gewenst is, dient de ontvanger aanvullende maatregelen te implementeren (retry-mechnisme, foutafhandeling). De Koppelvlakstandaard bevat hiervoor handvatten. Toepassing van deze handvatten in concrete implementaties vallen buiten de scope van het koppelvlak.
 
 De standaard doet geen uitspraak over gegevensstromen waarin kleine en grote berichten voorkomen. Bij implementatie van dergelijke gegevensstromen zal een organisatie moeten afwegen of kleine berichten anders of gelijk aan de ‘echte’ grote berichten verwerkt worden. In z’n algemeenheid zal een uniforme afhandeling eenduidiger en vooral ook eenvoudiger zijn; slechts in bijzondere gevallen zal dit niet volstaan.
 
@@ -105,33 +202,33 @@ Bij het Melden van grote hoeveelheden informatie dient van ebMS2 gebruik gemaakt
 
 De volgende aanpak is hierbij gebruikelijk:
 
-- De verzender stelt een groot bestand samen voor de overdracht.
+-   De verzender stelt een groot bestand samen voor de overdracht.
 
-- De verzender stelt de metadata samen en verstuurt deze via ebMS2.
+-   De verzender stelt de metadata samen en verstuurt deze via ebMS2.
 
-- De ontvanger haalt het grote bestand op.
+-   De ontvanger haalt het grote bestand op.
 
 Ook bij het Bevragen van grote hoeveelheden informatie kan van ebMS2 gebruik gemaakt worden. In dat geval gaat er een ebMS2 bevraging vooraf aan bovenstaande (terug-) Melding.
 
 Toepassingen:
 
-- Verzenden van grote hoeveelheden informatie.
+-   Verzenden van grote hoeveelheden informatie.
 
-- Distributie van grote hoeveelheden informatie.
+-   Distributie van grote hoeveelheden informatie.
 
 Een alternatieve aanpak is:
 
-- De verzender stelt de metadata samen en verstuurt deze via ebMS2.
+-   De verzender stelt de metadata samen en verstuurt deze via ebMS2.
 
-- De ontvanger haalt het grote bestand op.
+-   De ontvanger haalt het grote bestand op.
 
-- De verzender genereert 'real-time' tijdens het ophalen de benodigde data.
+-   De verzender genereert 'real-time' tijdens het ophalen de benodigde data.
 
 Toepassingen:
 
-- Noodzaak tot beperken van opslagcapaciteit voor grote bestanden.
+-   Noodzaak tot beperken van opslagcapaciteit voor grote bestanden.
 
-- Tijdkritische omgevingen.
+-   Tijdkritische omgevingen.
 
 Merk op dat de metadata de checksum van het grote bestand bevat. Deze werkwijze vereist daarom dat de checksum al vooraf is bepaald. Vaak zal aan deze voorwaarde niet voldaan kunnen worden.
 
@@ -141,15 +238,15 @@ Bij het Bevragen van grote hoeveelheden informatie kan naast ebMS2 (zie hiervoor
 
 Het toepassen van WUS voor Bevraging met Grote Berichten heeft wel enkele lastige eisen. WUS is een synchroon protocol waarin time-outs toegepast worden bij het uitblijven van een response op het request. Daarom is weinig tijd beschikbaar voor het genereren van een response bericht. Dit vereist daarom dat aan één van de volgende eisen is voldaan:
 
-- Het grote bestand is al gereed op het moment van de WUS bevraging.
+-   Het grote bestand is al gereed op het moment van de WUS bevraging.
 
-- Het grote bestand kan snel voor of tijdens het ophalen gegenereerd worden én de checksum is vooraf bekend.
+-   Het grote bestand kan snel voor of tijdens het ophalen gegenereerd worden én de checksum is vooraf bekend.
 
 Toepassingen:
 
-- Opvragen van grote hoeveelheden informatie.
+-   Opvragen van grote hoeveelheden informatie.
 
-- Opvragen van (afgesloten) log-bestanden.
+-   Opvragen van (afgesloten) log-bestanden.
 
 ### Brengen
 
@@ -157,11 +254,11 @@ Er is bij grote berichten sprake van brengen, wanneer een groot bestand voorafga
 
 De volgende aanpak wordt hierbij gehanteerd:
 
-- De verzender stelt een groot bestand samen en verstuurt deze via HTTP.
+-   De verzender stelt een groot bestand samen en verstuurt deze via HTTP.
 
-- De verzender stelt de metadata samen en verstuurt deze via ebMS of WUS.
+-   De verzender stelt de metadata samen en verstuurt deze via ebMS of WUS.
 
-- De ontvanger verwerkt het grote bestand.
+-   De ontvanger verwerkt het grote bestand.
 
 Het brengen interactiepatroon kan niet plaatsvinden op basis van de huidige versie van de koppelvlakstandaard. Het Technisch Overleg Digikoppeling heeft om redenen van veiligheid en gebrek aan behoefte geen uitwerking gegeven aan dit interactiepatroon. De koppelvlakstandaard is wel voorbereid op een toekomstige toevoeging van dit interactiepatroon mocht dit gewenst zijn.
 
@@ -198,154 +295,244 @@ Voor ieder groot bestand dient een unieke lokale bestandsnaam bepaald te worden.
 Als basis voor lokale bestandsnamen kan ook gebruik gemaakt worden van het bericht-id van de metadata of van de location-url, waarvan voor beide de uniciteit gegarandeerd kan worden. Een andere optie is om zelf een unieke bestandsnaam te genereren, gebruikmakend van de metadata en aangevuld met tenminste één unieke component (bericht-id, location-url of UUID).
 
 Voorbeelden:
+
 >   sample.xml-c3c3281c-e561-4be8-8519-4e9690fb0f08
+
 >   c3c3281c-e561-4be8-8519-4e9690fb0f08.xml
+
 >   https-my.host.nl-f47ac10b-58cc-**4**372-**a**567-0e02b2c3d479
 
 ### Metadata als deel van een bericht
 
 Metadata hoeft niet altijd als een afzonderlijk bericht verzonden te worden. Het is ook toegestaan om metadata met andere parameters te combineren in één bericht. Het verschil tussen gewone services en “grote berichten” services beperkt zich dus alleen tot de wijze waarop de “payload” wordt aangeleverd.
 
-```XML
-<?xml version="1.0" encoding="UTF-8"?>
-<embedded-meta xmlns:tns="http://www.logius.nl/digikoppeling/gb-embedded/" xmlns:gb="http://www.logius.nl/digikoppeling/gb/2010/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.logius.nl/digikoppeling/gb/ gb-embedded.xsd ">
-	<andere-data>
-		Hier kan van alles staan, tekst of andere tags .
-	</andere-data>
-	<digikoppeling-external-data-references profile="digikoppeling-gb-1.0">
-		<data-reference contextId="1201">
-			<lifetime />
-			<content contentType="">
-				<filename>
-					NCName
-				</filename>
-				<checksum type="MD5">
-					0123456789012345678901234567890123456789
-				</checksum>
-				<size>
-					1024
-				</size>
-			</content>
-			<transport>
-				<location>
-					<senderUrl type="xs:anyURI">
-						https://my.host.nl/12345-2-c3c3281c-e561-4be8-8519
-					</senderUrl>
-				</location>
-			</transport>
-		</data-reference>
-	</digikoppeling-external-data-references>
-</embedded-meta>
-```
+>   \<?xml version="1.0" encoding="UTF-8"?\>
+
+>   \<tns:embedded-meta
+
+>   xmlns:tns="http://www.logius.nl/digikoppeling/gb-embedded/"
+
+>   xmlns:gb="http://www.logius.nl/digikoppeling/gb/2010/10"
+
+>   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+>   xsi:schemaLocation="<http://www.logius.nl/digikoppeling/gb/> gb-embedded.xsd "\>
+
+>   \<tns:andere-data\>
+
+>   Hier kan van alles staan, tekst of andere tags .
+
+>   \</tns:andere-data\>
+
+>   \<gb:digikoppeling-external-data-references
+
+>   profile="digikoppeling-gb-1.0"\>
+
+>   \<gb:data-reference contextId="1201"\>
+
+>   \<gb:lifetime /\>
+
+>   \<gb:content contentType=""\>
+
+>   \<gb:filename\>NCName\</gb:filename\>
+
+>   \<gb:checksum type="MD5"\>
+
+>   0123456789012345678901234567890123456789\</gb:checksum\>
+
+>   \<gb:size\>1024\</gb:size\>
+
+>   \</gb:content\>
+
+>   \<gb:transport\>
+
+>   \<gb:location\>
+
+>   \<gb:senderUrl type="xs:anyURI"\> <https://my.host.nl/12345-2-c3c3281c-e561-4be8-8519>
+
+>   \</gb:senderUrl\>
+
+>   \</gb:location\>
+
+>   \</gb:transport\>
+
+>   \</gb:data-reference\>
+
+>   \</gb:digikoppeling-external-data-references\>
+
+>   \</tns:embedded-meta\>
 
 Essentieel voor GB is hierbij de *data-reference* tag; het gebruik van de *digikoppeling-external-data-references* tag is hierbij niet noodzakelijk. In plaats daarvan kan ook een tag uit de target namespace gebruikt worden, afhankelijk van het bijbehorende schema:
 
-```XML
-<?xml version="1.0" encoding="UTF-8"?>
-<embedded-meta xmlns:tns="http://www.logius.nl/digikoppeling/gb-embedded/" xmlns:gb="http://www.logius.nl/digikoppeling/gb/2010/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.logius.nl/digikoppeling/gb/ gb-embedded.xsd ">
-	<data>
-		<id>
-			tns:id
-		</id>
-		<version>
-			tns:version
-		</version>
-		<result profile="digikoppeling-gb-1.0">
-			<data-reference contextId="1201">
-				<lifetime />
-				<content contentType="">
-					<filename>
-						NCName
-					</filename>
-					<checksum type="MD5">
-						0123456789012345678901234567890123456789
-					</checksum>
-					<size>
-						1024
-					</size>
-				</content>
-				<transport>
-					<location>
-						<senderUrl type="xs:anyURI">
-							https://my.host.nl/12345-2-c3c3281c-e561-4be8-8519
-						</senderUrl>
-					</location>
-				</transport>
-			</data-reference>
-		</result>
-	</data>
-</embedded-meta>
+>   \<?xml version="1.0" encoding="UTF-8"?\>
 
-```
+>   \<tns:embedded-meta
+
+>   xmlns:tns="http://www.logius.nl/digikoppeling/gb-embedded/"
+
+>   xmlns:gb="http://www.logius.nl/digikoppeling/gb/2010/10"
+
+>   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+>   xsi:schemaLocation="<http://www.logius.nl/digikoppeling/gb/> gb-embedded.xsd "\>
+
+>   \<tns:data\>
+
+>   \<tns:id\>tns:id\</tns:id\>
+
+>   \<tns:version\>tns:version\</tns:version\>
+
+>   \<tns:result profile="digikoppeling-gb-1.0"\>
+
+>   \<gb:data-reference contextId="1201"\>
+
+>   \<gb:lifetime /\>
+
+>   \<gb:content contentType=""\>
+
+>   \<gb:filename\>NCName\</gb:filename\>
+
+>   \<gb:checksum type="MD5"\>
+
+>   0123456789012345678901234567890123456789\</gb:checksum\>
+
+>   \<gb:size\>1024\</gb:size\>
+
+>   \</gb:content\>
+
+>   \<gb:transport\>
+
+>   \<gb:location\>
+
+>   \<gb:senderUrl type="xs:anyURI"\> <https://my.host.nl/12345-2-c3c3281c-e561-4be8-8519>
+
+>   \</gb:senderUrl\>
+
+>   \</gb:location\>
+
+>   \</gb:transport\>
+
+>   \</gb:data-reference\>
+
+>   \</tns:result\>
+
+>   \</tns:data\>
+
+>   \</tns:embedded-meta\>
 
 De bijbehorende XSD zou hierbij als volgt gedefinieerd kunnen worden:
 
-```XML
-<?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gb="http://www.logius.nl/digikoppeling/gb/2010/10" xmlns:tns="http://www.logius.nl/digikoppeling/gb/embedded/" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.logius.nl/digikoppeling/gb/embedded/">
-	<import namespace="http://www.logius.nl/digikoppeling/gb/2010/10" schemaLocation="gb-1.0.xsd" />
-	<element name="embedded-meta" type="tns:data" />
-	<complexType name="data">
-		<sequence>
-			<element name="id" type="xs:string" />
-			<element name="version" type="xs:string" />
-			<element name="result" type="gb:external-data-references" />
-		</sequence>
-	</complexType>
-</schema>
-```
+>   \<?xml version="1.0" encoding="UTF-8"?\>
+
+>   \<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+>   xmlns:gb="http://www.logius.nl/digikoppeling/gb/2010/10"
+
+>   xmlns:tns="http://www.logius.nl/digikoppeling/gb/embedded/"
+
+>   elementFormDefault="qualified" attributeFormDefault="unqualified"
+
+>   targetNamespace="http://www.logius.nl/digikoppeling/gb/embedded/"\>
+
+>   \<xs:import namespace="http://www.logius.nl/digikoppeling/gb/2010/10"
+
+>   schemaLocation="gb-1.0.xsd" /\>
+
+>   \<xs:element name="embedded-meta" type="tns:data" /\>
+
+>   \<xs:complexType name="data"\>
+
+>   \<xs:sequence\>
+
+>   \<xs:element name="id" type="xs:string" /\>
+
+>   \<xs:element name="version" type="xs:string" /\>
+
+>   \<xs:element name="result" type="gb:external-data-references" /\>
+
+>   \</xs:sequence\>
+
+>   \</xs:complexType\>
+
+>   \</xs:schema\>
 
 ### Meerdere bestanden in één bericht
 
 Niet ieder groot bestand hoeft als een afzonderlijk bericht verzonden te worden. Het is ook toegestaan om meerdere bestanden te combineren in één bericht. Voor ieder afzonderlijk bestand dient dan wel een afzonderlijke data-reference te worden opgenomen in het bericht.
 
-```XML
-<schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" profile="digikoppeling-gb-1.0" xmlns:tns="http://www.logius.nl/digikoppeling/gb/2010/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xi:schemaLocation="http://www.logius.nl/digikoppeling/gb/2010/10/gb-meta.xsd">
-	<data-reference contextId="12345-1">
-		<lifetime />
-		<content contentType="application/xml">
-			<filename>
-				Bijlage-1NCName
-			</filename>
-			<checksum type="MD5">
-				0123456789abcdef0123456789abcdef
-			</checksum>
-			<size>
-				1024
-			</size>
-		</content>
-		<transport>
-			<location>
-				<senderUrl type="xs:anyURI">
-					https://my.host.nl/12345-1-c3c3281c-e561-4be8-8519
-				</senderUrl>
-			</location>
-		</transport>
-	</data-reference>
-	<data-reference contextId="12345-2">
-		<lifetime />
-		<content contentType="application/xml">
-			<filename>
-				Bijlage-2
-			</filename>
-			<checksum type="MD5">
-				0123456789abcdef0123454321abcdef
-			</checksum>
-			<size>
-				2048
-			</size>
-		</content>
-		<transport>
-			<location>
-				<senderUrl type="xs:anyURI">
-					https://my.host.nl/12345-2-c3c3281c-e561-4be8-8519
-				</senderUrl>
-			</location>
-		</transport>
-	</data-reference>
-</schema>
+>   \<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 
-```
+>   elementFormDefault="qualified"
+
+>   profile="digikoppeling-gb-1.0"
+
+>   xmlns:tns="http://www.logius.nl/digikoppeling/gb/2010/10"
+
+>   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+>   xi:schemaLocation="http://www.logius.nl/digikoppeling/gb/2010/10/gb-meta.xsd"\>
+
+>   \<tns:data-reference contextId="12345-1"\>
+
+>   \<tns:lifetime /\>
+
+>   \<tns:content contentType="application/xml"\>
+
+>   \<tns:filename\>Bijlage-1NCName\</tns:filename\>
+
+>   \<tns:checksum type="MD5"\>0123456789abcdef0123456789abcdef\</tns:checksum\>
+
+>   \<tns:size\>1024\</tns:size\>
+
+>   \</tns:content\>
+
+>   \<tns:transport\>
+
+>   \<tns:location\>
+
+>   \<tns:senderUrl type="xs:anyURI"\>
+
+>   https://my.host.nl/12345-1-c3c3281c-e561-4be8-8519
+
+>   \</tns:senderUrl\>
+
+>   \</tns:location\>
+
+>   \</tns:transport\>
+
+>   \</tns:data-reference\>
+
+>   \<tns:data-reference contextId="12345-2"\>
+
+>   \<tns:lifetime /\>
+
+>   \<tns:content contentType="application/xml"\>
+
+>   \<tns:filename\>Bijlage-2\</tns:filename\>
+
+>   \<tns:checksum type="MD5"\>0123456789abcdef0123454321abcdef\</tns:checksum\>
+
+>   \<tns:size\>2048\</tns:size\>
+
+>   \</tns:content\>
+
+>   \<tns:transport\>
+
+>   \<tns:location\>
+
+>   \<tns:senderUrl type="xs:anyURI"\>
+
+>   https://my.host.nl/12345-2-c3c3281c-e561-4be8-8519
+
+>   \</tns:senderUrl\>
+
+>   \</tns:location\>
+
+>   \</tns:transport\>
+
+>   \</tns:data-reference\>
+
+>   \</tns:digikoppeling-external-data-references\>
 
 ### Geldigheidsduur
 
@@ -361,31 +548,31 @@ Houdt er mee rekening dat een bestandsoverdracht niet binnen een afgesproken tij
 
 In het geval van Digikoppeling Grote Berichten is sprake van minimaal twee uitwisselingen waarvan het belang is om de samenhang te bewaken:
 
-1. bericht met de meta-data;
+1.  bericht met de meta-data;
 
-1. bestand dat naar aanleiding hiervan opgehaald wordt.
+2.  bestand dat naar aanleiding hiervan opgehaald wordt.
 
 Het bewaken van de samenhang wordt extra belangrijk als er (tegelijkertijd) meerdere gegevensstromen zijn. Een oplossing verschilt per implementatie en kent algemeen de volgende mogelijkheden:
 
-- Verzender standaard  
+-   Verzender standaard  
     Een verzender van het grote bericht heeft geen moeite om de context te bewaken. De applicatie die het grote bestand aanmaakt zal in hetzelfde proces ook metadata aanmaken. Bij ophalen van het bestand vormt de url waarmee deze opgehaald wordt de referentie voor de bestandserver. Om de oplossing robuuster te maken kan de contextID uit de metadata aanvullend overgenomen worden in het bestand. Onderstaande mogelijkheden hebben verder alleen betrekking op het bewaken van de context aan de ontvanger kant.
 
-- Contextbewaking door applicatieserver (WUS)  
+-   Contextbewaking door applicatieserver (WUS)  
     De ontvanger die via een synchrone WUS-response metadata ontvangt kan in dezelfde procesgang het bestand ophalen. Bewaken van de context vindt dan door de applicatieserver plaats die na verzending van het request een proces ‘on hold’ zet en bij binnenkomst van een response het proces opstart dat hier op stond te wachten.
 
-- Contextbewaking met expliciete referentie (ebMS2)  
+-   Contextbewaking met expliciete referentie (ebMS2)  
     In het geval van ebMS2 kan als standaard oplossing een referentie meegegeven worden. Dit kan door deze op te nemen in de contextID van de metadata. Bij voorkeur komt deze overeen met de MessageID of ConversationID van het bericht:
 
-1. Als het bestand specifiek bij één bericht hoort: MessageID
+1.  Als het bestand specifiek bij één bericht hoort: MessageID
 
-1. Als het bestand bij een conversatie van meerdere berichten hoort of als een conversatie maar één bericht bevat: ConversationID.
+2.  Als het bestand bij een conversatie van meerdere berichten hoort of als een conversatie maar één bericht bevat: ConversationID.
 
     Om de oplossing robuuster te maken kan de contextID uit de metadata aanvullend overgenomen worden in het bestand.
 
-- Contextbewaking met expliciete referentie (WUS)  
-    In het geval van synchrone WUS maar ook bij asynchrone WUS (geen Digikoppeling!) kan als standaard oplossing een referentie meegegeven worden. Dit kan bijvoorbeeld door de applicatie de referentie in de body te laten opnemen. Beter is het echter om dit conform Digikoppeling in de header op te nemen. In het request wordt de referentie dan opgenomen in de MessageID van het WUS-request. De service geeft deze MessageID dan terug als 'contextID' in de (synchrone of asynchrone) WUS-response<sup>1</sup>. Om de oplossing robuuster te maken kan de contextID uit de metadata aanvullend overgenomen worden in het bestand.
+-   Contextbewaking met expliciete referentie (WUS)  
+    In het geval van synchrone WUS maar ook bij asynchrone WUS (geen Digikoppeling!) kan als standaard oplossing een referentie meegegeven worden. Dit kan bijvoorbeeld door de applicatie de referentie in de body te laten opnemen. Beter is het echter om dit conform Digikoppeling in de header op te nemen. In het request wordt de referentie dan opgenomen in de MessageID van het WUS-request. De service geeft deze MessageID dan terug als 'contextID' in de (synchrone of asynchrone) WUS-response[^1]. Om de oplossing robuuster te maken kan de contextID uit de metadata aanvullend overgenomen worden in het bestand.
 
-<sup>1</sup>: Volgens de WUS koppelvlakstandaard zal ook het headerveld “RelatesTo” van de response overeenkomen met het MessageID van het request.
+[^1]: Volgens de WUS koppelvlakstandaard zal ook het headerveld “RelatesTo” van de response overeenkomen met het MessageID van het request.
 
 ## Reliability
 
@@ -407,12 +594,12 @@ De noodzaak van een retry-mechanisme doet geen afbreuk aan de standaard. Ook ebM
 
 Indien een bestandsoverdracht niet succesvol voltooid kan worden, dan dienen het meta-bericht, bijbehorende log-bestanden en het eventuele grote bestand bewaard te worden voor een latere handmatige verwerking.
 
-Het koppelvlak schrijft niet voor hoe te handelen bij optredende foutsituaties; het is de verantwoordelijkheid van de applicaties om hiervoor een adequate oplossing te bieden. Enerzijds zou de ontvanger de bestandsoverdracht kunnen monitoren en eventuele foutsituaties melden aan de verzender; anderzijds kan het ontbreken van een bevestiging voor de verzender aanleiding zijn om actie te ondernemen.
+Het koppelvlak schrijft niet voor hoe te handelen bij optredende foutsituaties; het is de verantwoordelijkheid van de applicaties om hiervoor een adequate oplossing te bieden. Enerzijds zou de ontvanger de bestandsoverdracht kunnen monitoren en eventuele foutsituaties melden aan de verzender; anderszijds kan het ontbreken van een bevestiging voor de verzender aanleiding zijn om actie te ondernemen.
 
 Belangrijkste foutsituaties bij bestandsoverdracht:
 
 | Statuscode | Omschrijving          | Vervolgactie                                                                                             |
-| --- |-----------------------| --- |
+|------------|-----------------------|----------------------------------------------------------------------------------------------------------|
 | 200        | OK                    | Indien de ontvangst van data wordt onderbroken, dan een nieuwe Range-request; anders GEEN.               |
 | 206        | Partial Content       | Idem.                                                                                                    |
 | 403        | Forbidden             | Authenticatie probleem; verder proberen is niet zinvol.                                                  |
@@ -436,13 +623,13 @@ Controle van het OIN uit het certificaat van de (bestands)server aan de client-z
 
 Controle van het OIN in het client-certificaat is voor vertrouwelijke (niet-openbare) gegevensbestanden noodzakelijk. Hiervoor zijn onder andere de volgende implementaties mogelijk:
 
-1. OIN opnemen in de url  
+1.  OIN opnemen in de url  
     In deze situatie bevat de url waarmee het bestand opgehaald wordt het OIN van de organisatie die dit mag ophalen. In een security-module (zie voorbeeld Apache Tomcat) vindt dan aan de hand van het certificaat controle plaats of een rechtmatige url toegepast wordt.
 
-1. Autorisatie-database  
+2.  Autorisatie-database  
     In deze situatie wordt het OIN uit het certificaat vergeleken met autorisaties in een database (zie opmerking in voorbeeld Apache Tomcat). Dit kan bijvoorbeeld nodig zijn omdat meerdere organisaties tot hetzelfde bestand toegang moeten hebben. Een simpele oplossing als hiervoor volstaat dan niet meer.
 
-1. Http basic-authentication (met TLS-offloader)  
+3.  Http basic-authentication (met TLS-offloader)  
     In deze situatie wordt het OIN uit het certificaat door een TLS-offloader toegevoegd in de http-uitwisseling als userid waar de achterliggende bestandsserver op controleert.
 
 #### Certificaat-geldigheid
@@ -467,12 +654,23 @@ Ten behoeve van grote berichten hoeven de http connectors voor DigiKoppeling in 
 
 De nieuwe connector dient in *server.xml* te worden toegevoegd:
 
-```XML
-<Connector port="8443" protocol="org.apache.coyote.http11.Http11Protocol" SSLEnabled="true" maxThreads="10" scheme="https" secure="true" keystoreFile="C:/Documents and Settings/gateway/osbgateway-2.0.11/
-		conf/keystores/ebmsserver.jks" keystoreType="JKS" keystorePass="xxxx" truststoreFile="C:/Documents and Settings/gateway/osbgateway-2.0.11/
-		conf/keystores/truststore.jks" truststoreType="JKS" truststorePass="xxxx" clientAuth="true" sslProtocol="TLS" />
+>   \<Connector port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
 
-```
+>   SSLEnabled="true" maxThreads="10" scheme="https" secure="true"
+
+>   keystoreFile="C:/Documents and Settings/gateway/osbgateway-2.0.11/
+
+>   conf/keystores/ebmsserver.jks"
+
+>   keystoreType="JKS" keystorePass="xxxx"
+
+>   truststoreFile="C:/Documents and Settings/gateway/osbgateway-2.0.11/
+
+>   conf/keystores/truststore.jks"
+
+>   truststoreType="JKS" truststorePass="xxxx"
+
+>   clientAuth="true" sslProtocol="TLS" /\>
 
 Merk op dat in dit voorbeeld een poortnummer toegepast wordt dat naar buiten toe (Digikoppeling) niet toegepast mag worden. Dit kan dus wel als interne implementatie maar zal nog via NATting naar poort 443 getransformeerd moeten worden.
 
@@ -482,20 +680,23 @@ Ten behoeve van de autorisatie kan ook gebruik gemaakt worden van security filte
 
 Security filters dienen als library (jar) geïmplementeerd te worden en dienen in *web.xml* geconfigureerd te worden:
 
-```XML
-<filter>
-    <filter-name>shared</filter-name>
-    <filter-class>com.filters.Authenticate</filter-class>
-</filter>
-```
+>   \<filter\>
+
+>   \<filter-name\>shared\</filter-name\>
+
+>   \<filter-class\>com.filters.Authenticate\</filter-class\>
+
+>   \</filter\>
+
 De bijbehorende URL-mapping dient eveneens in *web.xml* geconfigureerd te worden:
 
-```XML
-<filter-mapping>
-    <filter-name>shared</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>
-```
+>   \<filter-mapping\>
+
+>   \<filter-name\>shared\</filter-name\>
+
+>   \<url-pattern\>/\*\</url-pattern\>
+
+>   \</filter-mapping\>
 
 Het is de verantwoordelijkheid van de verstrekkende partijen om inkomende requests te controleren op geldigheid.
 
@@ -507,10 +708,10 @@ Ten behoeve van Tomcat dienen alle benodigde certificaten naar JKS-formaat gecon
 
 Een veel voorkomende situatie is dat voorgaande use-cases in combinatie met een intermediair toegepast worden. Zo treedt bijvoorbeeld bij Justitie de JustID organisatie centraal als intermediair op voor interacties met alle Justitie-partijen. In deze situatie zijn een tweetal modellen voor intermediairs mogelijk:
 
-1. Niet-transparante intermediair  
+1.  Niet-transparante intermediair  
     In deze situatie vindt wel store-and-forward van het grote bestand plaats. Daarom wijzigt de intermediair de meta-data en specifiek de senderUrl waar het bestand opgehaald wordt.
 
-1. Transparante intermediair  
+2.  Transparante intermediair  
     In deze situatie vindt geen store-and-foreward van het grote bestand plaats. Daarom geeft de intermediair de meta-data transparant door aan het endpoint van de ontvanger. Het maakt daarbij niet uit of op berichtniveau sprake is van protocol-transformatie (bijvoorbeeld van ebMS naar WUS), zolang de meta-data maar transparant doorgegeven wordt.
 
 Merk op dat een niet-transparante intermediair ook protocol-conversie uit kan voeren. Daardoor is het denkbaar dat extern grote berichten volgens de Digikoppeling-standaard Grote Berichten verstuurd worden terwijl op het interne netwerk geen verschil tussen grote en kleine berichten bestaat. In het voorbeeld van Justitie zou JustID ervoor kunnen kiezen om de extern ontvangen grote berichten (na ophalen van het groot bestand) volledig via ebMS2 door te sturen. Dit werkt uiteraard ook omgekeerd, maar dan wordt het ebMS2 bericht gesplitst in een bericht met meta-data en een groot bestand.
@@ -533,45 +734,45 @@ Afhankelijk van de use-case (zoals in vorige paragrafen beschreven) zal ook nu v
 
 De ontvanger haalt vervolgens het bestand op bij de verzender. Dit kan door de intermediair op twee manieren zijn ingericht:
 
-- zonder proxy  
+-   zonder proxy  
     Het bestand wordt door de verzender rechtstreeks met een http-bestandsserver ter beschikking gesteld (bijvoorbeeld bereikbaar vanaf Diginetwerk of bereikbaar vanaf Internet). De ontvanger van de meta-data kan het bestand hier ophalen.
 
-- met proxy<sup>2</sup>  
+-   met proxy[^2]  
     Het bestand wordt door de verzender met een http-bestandsserver beschikbaar gesteld aan de intermediair via bijvoorbeeld een sectoraal netwerk. De intermediair richt een http-(reverse-)proxy in om deze bestandsserver vanaf Diginetwerk of het Internet bereikbaar te maken.
 
-<sup>2</sup>: N.B. Behalve een keuze voor het toepassen van een proxy bij het intermediair kan natuurlijk aanvullend bij verzender en/of vervanger voor een (reverse-)proxy gekozen worden.
+[^2]: N.B. Behalve een keuze voor het toepassen van een proxy bij het intermediair kan natuurlijk aanvullend bij verzender en/of vervanger voor een (reverse-)proxy gekozen worden.
 
 In deze situatie vindt dus geen store-and-foreward van het grote bestand plaats. De senderURL in de meta-data blijft daarom ook ongewijzigd. De verzender dient dus al direct de url te gebruiken waarmee het bestand is op te halen; bijvoorbeeld door een url op basis van het organisatiedomein te gebruiken.
 
 In het geval dat bestanden binnen het interne netwerk door zowel interne als externe partijen opgehaald moeten kunnen worden, vormt netwerk-routering een extra complicatie. Beschrijven van best-practices hiervoor vallen buiten de scope van Digikoppeling, maar globaal is de uitwerking hiervan als volgt:
 
-- De domeinnaam van de url zal geresolved worden naar een IP-adres van de server waar het bestand staat.
+-   De domeinnaam van de url zal geresolved worden naar een IP-adres van de server waar het bestand staat.
 
-- Het IP-adres op een intern netwerk wijkt vaak af van het (publieke) IP-adres op het externe netwerk. Dit kan opgelost worden via een van de volgende mogelijkheden:
+-   Het IP-adres op een intern netwerk wijkt vaak af van het (publieke) IP-adres op het externe netwerk. Dit kan opgelost worden via een van de volgende mogelijkheden:
 
-1. twee url's toepassen: een interne en externe url die resolven naar het interne respectievelijk publieke IP-adres;
+1.  twee url's toepassen: een interne en externe url die resolven naar het interne respectievelijk publieke IP-adres;
 
-1. één url dat voor interne gebruikers resolved naar het interne IP-adres en voor externe gebruikers naar het publieke IP-adres;
+2.  één url dat voor interne gebruikers resolved naar het interne IP-adres en voor externe gebruikers naar het publieke IP-adres;
 
-1. één url dat resolved naar het publieke IP-adres en dit publieke IP-adres ook op het interne netwerk routeren;
+3.  één url dat resolved naar het publieke IP-adres en dit publieke IP-adres ook op het interne netwerk routeren;
 
-1. één url dat resolved naar het publieke IP-adres van de proxy en deze proxy ook toepassen voor clients op het interne netwerk<sup>3</sup>.
+4.  één url dat resolved naar het publieke IP-adres van de proxy en deze proxy ook toepassen voor clients op het interne netwerk[^3].
 
-<sup>3</sup>: Soms kan het nodig zijn om de proxy-servers een 'rewrite' van url's te laten uitvoeren.
+[^3]: Soms kan het nodig zijn om de proxy-servers een 'rewrite' van url's te laten uitvoeren.
 
 ## NATting
 
 Als een transparante-intermediair zich bevindt op de rand tussen intern en extern netwerk (b.v. Diginetwerk) is vaak ook vertaling van interne naar externe IP-adressen nodig (NATting). Ook in andere situaties kan dit wenselijk zijn. Dit vraagstuk bevindt zich grotendeels buiten de scope van Diginetwerk. Enkele mogelijkheden om aan te denken zijn:
 
-- Bereikbaarheid van externe file-servers is eenvoudig in te regelen via een constructie met 'default gateway' voor bereikbaarheid van de firewall en NATting door de firewall.
+-   Bereikbaarheid van externe file-servers is eenvoudig in te regelen via een constructie met 'default gateway' voor bereikbaarheid van de firewall en NATting door de firewall.
 
-- Bereikbaarheid van interne file-servers voor organisaties op het externe netwerk kent enkele alternatieven:
+-   Bereikbaarheid van interne file-servers voor organisaties op het externe netwerk kent enkele alternatieven:
 
-1. ken elke interne file-server een eigen publiek (b.v. Diginetwerk) IP-adres toe dat door de Firewall geNAT wordt naar een intern IP-adres;
+1.  ken elke interne file-server een eigen publiek (b.v. Diginetwerk) IP-adres toe dat door de Firewall geNAT wordt naar een intern IP-adres;
 
-1. gebruik één publiek IP-adres dat gerouteerd wordt naar één gemeenschappelijke reverse-proxy en laat deze proxy afhankelijk van url naar de juiste interne IP-adressen doorrouteren;
+2.  gebruik één publiek IP-adres dat gerouteerd wordt naar één gemeenschappelijke reverse-proxy en laat deze proxy afhankelijk van url naar de juiste interne IP-adressen doorrouteren;
 
-1. hetzelfde als alternatief b) maar nu vindt geen 'rewrite' naar een intern ip-adres maar naar een interne (andere) url plaats.
+3.  hetzelfde als alternatief b) maar nu vindt geen 'rewrite' naar een intern ip-adres maar naar een interne (andere) url plaats.
 
     Bij alternatief b) en c) zal de TLS-sessie getermineerd moeten worden om in de proxy de url van het http-protocol te kunnen zien. Controle of de url is toegestaan voor het OIN in dit certificaat zal dan ook door de proxy moeten plaatsvinden danwel de proxy moet dit OIN doorgeven (b.v. met http basic authentication).
 
@@ -585,27 +786,31 @@ Dit hoofdstuk beschrijft deze use-cases en geeft aan hoe deze gerealiseerd kunne
 
 In deze use case zijn benodigde gegevens al beschikbaar in een download-server. De afnemer dient echter nog de beschikking te krijgen over een referentie naar de gewenste gegevens. Daartoe worden de volgende processtappen doorlopen:
 
-![Use case 'Download'](media/use_case_download.jpeg "Use case 'Download'")
+![](media/c49763fdff1e2c90618340743f68a29b.jpeg)
 
-- De Afnemer bevraagt (WUS-request of eventueel ebMS2) de Service Provider met kenmerkende criteria voor de gezochte gegevens. Eventueel kan deze bevraging in enkele tussenstappen verlopen als deze initieel teveel mogelijkheden oplevert.
+Figuur B1. Use case 'Download'
 
-- De Service provider levert een verwijzing naar de gezochte gegevens in de vorm van Meta-data (WUS-response of ebMS2).
+-   De Afnemer bevraagt (WUS-request of eventueel ebMS2) de Service Provider met kenmerkende criteria voor de gezochte gegevens. Eventueel kan deze bevraging in enkele tussenstappen verlopen als deze initieel teveel mogelijkheden oplevert.
 
-- De Afnemer haalt de gewenste gegevens op (Groot Bericht) en krijgt deze op grond van autorisatie (OIN).
+-   De Service provider levert een verwijzing naar de gezochte gegevens in de vorm van Meta-data (WUS-response of ebMS2).
+
+-   De Afnemer haalt de gewenste gegevens op (Groot Bericht) en krijgt deze op grond van autorisatie (OIN).
 
 ## Selectie
 
 In deze use case vraagt een Afnemer een gegevensselectie van een Service-verlener. Daartoe worden de volgende processtappen doorlopen:
 
-![Use case 'Selectie'](media/use_case_selectie.jpeg "Use case 'Selectie'")
+*![](media/7b7cc572f88223c79e1bfd45fb9ea8a5.jpeg)*
 
-1. De Afnemer bevraagt (ebMS2-request of eventueel WUS) de Service Provider met kenmerkende criteria voor de gezochte gegevens. Eventueel kan deze bevraging in enkele tussenstappen verlopen als deze initieel teveel mogelijkheden oplevert.
+Figuur B3. Use case 'Selectie'
 
-1. De Service Provider maakt de gewenste gegevens aan en zet deze klaar in een Groot Bestand.
+1.  De Afnemer bevraagt (ebMS2-request of eventueel WUS) de Service Provider met kenmerkende criteria voor de gezochte gegevens. Eventueel kan deze bevraging in enkele tussenstappen verlopen als deze initieel teveel mogelijkheden oplevert.
 
-1. Zodra het Grote Bestand gereed is, Meldt de Service Provider dit aan de eerdere Afnemer met een verwijzing naar de gezochte gegevens in de vorm van Meta-data (ebMS2).
+2.  De Service Provider maakt de gewenste gegevens aan en zet deze klaar in een Groot Bestand.
 
-1. De Afnemer haalt de gewenste gegevens op (Groot Bericht) en krijgt deze op grond van autorisatie (OIN).
+3.  Zodra het Grote Bestand gereed is, Meldt de Service Provider dit aan de eerdere Afnemer met een verwijzing naar de gezochte gegevens in de vorm van Meta-data (ebMS2).
+
+4.  De Afnemer haalt de gewenste gegevens op (Groot Bericht) en krijgt deze op grond van autorisatie (OIN).
 
 Merk op dat deze use case vrijwel gelijk is aan “Download”. Alleen stap 2 'aanmaken selectie' is aanvullend. Vanwege de benodigde tijd van dit aanmaken kan gereedmelding niet via een WUS-response plaatsvinden en zal altijd ebMS2 toegepast moeten worden. Als het 'aanmaken van de selectie binnen de time-out van het WUS-request kan plaatsvinden ontstaat als vanzelf het “Download” pattern.
 
@@ -613,16 +818,17 @@ Merk op dat deze use case vrijwel gelijk is aan “Download”. Alleen stap 2 'a
 
 In deze use case verzendt een Afnemer gegevens naar een Service-verlener. Daartoe worden de volgende processtappen doorlopen:
 
-![Use case 'Verzending'](media/use_case_verzending.jpeg "Use case 'Verzending'")
+![](media/7133ea6e7cb079fd3866a23a214dc1ce.jpeg)
 
+*Figuur B5. Use case 'Verzending*
 
-1. Op enig moment is er een gebeurtenis waardoor de Service-provider besluit tot verzenden van gegevens. Voorbeelden van triggers zijn: tijd, bericht ontvangst of wijziging van gegevensobjecten.
+1.  Op enig moment is er een gebeurtenis waardoor de Service-provider besluit tot verzenden van gegevens. Voorbeelden van triggers zijn: tijd, bericht ontvangst of wijziging van gegevensobjecten.
 
-1. Als gegevens niet beschikbaar zijn in de vorm van een Groot Bestand zal dit aangemaakt worden (bijvoorbeeld door samenstelling vanuit een database).
+2.  Als gegevens niet beschikbaar zijn in de vorm van een Groot Bestand zal dit aangemaakt worden (bijvoorbeeld door samenstelling vanuit een database).
 
-1. De Service Provider stuurt een 'verzoek tot ophalen' naar de Afnemer (ebMS2). In deze Melding is in ieder geval de Meta-data van het Grote Bestand opgenomen, maar kan bijvoorbeeld ook informatie over de aard en beoogde afhandeling van het Grote Bestand zijn opgenomen.
+3.  De Service Provider stuurt een 'verzoek tot ophalen' naar de Afnemer (ebMS2). In deze Melding is in ieder geval de Meta-data van het Grote Bestand opgenomen, maar kan bijvoorbeeld ook informatie over de aard en beoogde afhandeling van het Grote Bestand zijn opgenomen.
 
-1. De Afnemer haalt de gegevens op (Groot Bericht) en krijgt deze verstrekt op grond van autorisatie (OIN).
+4.  De Afnemer haalt de gegevens op (Groot Bericht) en krijgt deze verstrekt op grond van autorisatie (OIN).
 
 Aanvullend kan het Grote Bestand ook verwijderd worden. Bijvoorbeeld nadat de expiration-time is verstreken of nadat de Afnemer een bericht heeft gestuurd om de succesvolle ontvangst te bevestigen.
 
@@ -632,30 +838,30 @@ Merk op dat deze interactie identiek is aan “Multi-distributie” maar slechts
 
 In deze use case distribueert een Service-verlener gegevens naar meerdere Afnemers. Daartoe worden de volgende processtappen doorlopen:
 
-![Use case '(multi-) distributie'](media/use_case_multidistributie.jpeg "Use case '(multi-) distributie'")
+*![](media/ad97eda7bfa3e4b925fe58b01c47da69.jpeg)*
 
-1. Op enig moment is er een gebeurtenis waardoor de Service-provider besluit tot distributie van gegevens. Voorbeelden van triggers zijn: tijd, bericht ontvangst of wijziging van gegevensobjecten.
+*Figuur B2. Use case '(multi-) distributie'*
 
-1. Als gegevens niet beschikbaar zijn in de vorm van een Groot Bestand zal dit aangemaakt worden (bijvoorbeeld door samenstelling vanuit een database).
+1.  Op enig moment is er een gebeurtenis waardoor de Service-provider besluit tot distributie van gegevens. Voorbeelden van triggers zijn: tijd, bericht ontvangst of wijziging van gegevensobjecten.
 
-1. De Service Provider stuurt een Melding (ebMS2) naar de Afnemers die deze gegevens (bijvoorbeeld op basis van een abonnement) behoren te ontvangen. In deze Melding is in ieder geval de Meta-data van het Grote Bestand opgenomen, maar kan bijvoorbeeld ook informatie over de aard en beoogde afhandeling van het Grote Bestand zijn opgenomen. Alle Afnemers ontvangen dezelfde Meta-data.
+2.  Als gegevens niet beschikbaar zijn in de vorm van een Groot Bestand zal dit aangemaakt worden (bijvoorbeeld door samenstelling vanuit een database).
 
-1. Afnemers halen de gegevens op (Groot Bericht) en krijgen deze verstrekt op grond van autorisatie (OIN).
+3.  De Service Provider stuurt een Melding (ebMS2) naar de Afnemers die deze gegevens (bijvoorbeeld op basis van een abonnement) behoren te ontvangen. In deze Melding is in ieder geval de Meta-data van het Grote Bestand opgenomen, maar kan bijvoorbeeld ook informatie over de aard en beoogde afhandeling van het Grote Bestand zijn opgenomen. Alle Afnemers ontvangen dezelfde Meta-data.
+
+4.  Afnemers halen de gegevens op (Groot Bericht) en krijgen deze verstrekt op grond van autorisatie (OIN).
 
 Aanvullend kan het Grote Bestand ook verwijderd worden. Bijvoorbeeld nadat de expiration-time is verstreken of nadat alle Afnemers een bericht hebben gestuurd om de succesvolle ontvangst te bevestigen.
 
 ## Upload
 
-![Use case 'Upload'](media/use_case_upload.jpeg "Use case 'Upload'")
+![](media/a95fa397adc683f29d787495dbf520ee.jpeg)In deze use case upload een Afnemer gegevens naar een Service-verlener. Deze use case is alleen mogelijk met de 'brengen' interactie die de huidige versie niet ondersteund. De use case “verzenden” is functioneel hiermee gelijkwaardig maar past wel het 'halen' interactiepatroon toe. De processtappen van “upload” zijn daarom niet verder uitgewerkt.
 
-In deze use case upload een Afnemer gegevens naar een Service-verlener. Deze use case is alleen mogelijk met de 'brengen' interactie die de huidige versie niet ondersteund. De use case “verzenden” is functioneel hiermee gelijkwaardig maar past wel het 'halen' interactiepatroon toe. De processtappen van “upload” zijn daarom niet verder uitgewerkt.
-
-
+Figuur B4 Use case 'Upload'
 
 ## Business voorbeelden
 
 | **Use case**        | **Voorbeeld**                                                                                 |
-| --- |-----------------------------------------------------------------------------------------------|
+|---------------------|-----------------------------------------------------------------------------------------------|
 | upload              | Zie voorbeelden van Verzending.                                                               |
 | download            | Gegevens worden beschikbaar gesteld voor breed (openbaar) gebruik.                            |
 | selectie            | Ad hoc informatieverzoeken voor het samenstellen van rapportages of doorsnedes van gegevens . |
