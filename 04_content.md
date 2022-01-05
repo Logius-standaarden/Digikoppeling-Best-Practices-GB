@@ -403,7 +403,7 @@ Door het tijdsinterval variabel te maken kan worden voorkomen dat onnodig vaak r
 
 Wanneer er fatale fouten geconstateerd worden of wanneer de geldigheidsduur van een bestand verstreken is, dan zijn verdere retries niet zinvol en dient de bestandsoverdracht te worden afgebroken (give-up).
 
-**Opmerking**
+#### Opmerking
 
 De noodzaak van een retry-mechanisme doet geen afbreuk aan de standaard. Ook ebMS2 (betrouwbaar protocol) kent beperkingen in het aantal retries en retry-intervallen.
 
@@ -465,7 +465,7 @@ Een complicerende factor ten opzichte van berichtenuitwisseling met message-hand
 
 #### Apache Tomcat
 
-**HTTP connector**
+##### HTTP connector
 
 Ten behoeve van grote berichten hoeven de http connectors voor DigiKoppeling in principe niet te worden aangepast. Zowel DigiKoppeling als grote berichten maakt gebruikt van client authenticatie en TLS, en ze kunnen derhalve van dezelfde resources gebruik maken (poort 443). Beter is het echter om beide services toch gescheiden te houden en een afzonderlijke logische server in te richten voor grote berichten. Hierdoor kan het berichtenverkeer beter gescheiden worden en kunnen eventuele performance issues beter worden afgehandeld.
 
@@ -480,7 +480,7 @@ De nieuwe connector dient in *server.xml* te worden toegevoegd:
 
 Merk op dat in dit voorbeeld een poortnummer toegepast wordt dat naar buiten toe (Digikoppeling) niet toegepast mag worden. Dit kan dus wel als interne implementatie maar zal nog via NATting naar poort 443 getransformeerd moeten worden.
 
-**Security Filter**
+##### Security Filter
 
 Ten behoeve van de autorisatie kan ook gebruik gemaakt worden van security filters om de geldigheid van een request aan de hand van het client certificaat te kunnen verifiëren. Hierbij kan gedacht worden aan een controle dat iedere url het OIN van de client dient te bevatten, maar ook aan een database waarin iedere afzonderlijke url geautoriseerd dient te worden.
 
@@ -503,7 +503,7 @@ De bijbehorende URL-mapping dient eveneens in *web.xml* geconfigureerd te worden
 
 Het is de verantwoordelijkheid van de verstrekkende partijen om inkomende requests te controleren op geldigheid.
 
-**Certificaten**
+##### Certificaten
 
 Ten behoeve van Tomcat dienen alle benodigde certificaten naar JKS-formaat geconverteerd te worden.
 
