@@ -17,7 +17,8 @@ Het document is bestemd voor architecten en ontwikkelaars die op basis van DigiK
 Digikoppeling is beschreven in een set van documenten. Deze set is als volgt opgebouwd:
 
 
-![Overzicht van de onderdelen van de Digikoppeling Standaard, de standaard is onderverdeeld in normatieve en ondersteunende onderdelen](https://publicatie.centrumvoorstandaarden.nl/alg/media/DK_Specificatie_structuur.svg "Opbouw documentatie Digikoppeling")
+![Overzicht van de onderdelen van de Digikoppeling Standaard, de standaard is onderverdeeld in normatieve en ondersteunende onderdelen](media/DK_Specificatie_structuur.svg "Opbouw documentatie Digikoppeling")
+(Zie voor een tekstuele toelichting [Digikoppeling Standaard](https://publicatie.centrumvoorstandaarden.nl#Digikoppeling_structuur)
 
 
 
