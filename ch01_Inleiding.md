@@ -18,7 +18,7 @@ Digikoppeling is beschreven in een set van documenten. Deze set is als volgt opg
 
 
 ![Overzicht van de onderdelen van de Digikoppeling Standaard, de standaard is onderverdeeld in normatieve en ondersteunende onderdelen](media/DK_Specificatie_structuur.svg "Opbouw documentatie Digikoppeling")
-(Zie voor een tekstuele toelichting [Digikoppeling Standaard](https://publicatie.centrumvoorstandaarden.nl#Digikoppeling_structuur)
+(Zie voor een tekstuele toelichting [Digikoppeling Standaard](https://publicatie.centrumvoorstandaarden.nl#Digikoppeling_structuur) )
 
 
 
