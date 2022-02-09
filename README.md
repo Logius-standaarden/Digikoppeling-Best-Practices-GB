@@ -1,5 +1,3 @@
-![build](https://github.com/Logius-standaarden/Digikoppeling-Best-Practices-GB/actions/workflows/build.yml/badge.svg)
-
 # Digikoppeling Best Practices Grote berichten
 
 - html: https://logius-standaarden.github.io/Digikoppeling-Best-Practices-GB/
