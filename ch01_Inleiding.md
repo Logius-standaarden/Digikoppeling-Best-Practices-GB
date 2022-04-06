@@ -84,7 +84,7 @@ DigiKoppeling richt zich dus uitsluitend op de logistieke laag. Deze afspraken s
 
 De koppelvlakstandaarden dienen te leiden tot een maximum aan interoperabiliteit met een minimum aan benodigde ontwikkelinspanning. Daarom wordt gekozen voor bewezen interoperabele internationale standaarden.
 
-DigiKoppeling maakt berichtenuitwisseling mogelijk op basis van de ebXML/ebMS2 en WUS families van standaarden inclusief de daarbij behorende verwante standaarden.
+DigiKoppeling maakt berichtenuitwisseling mogelijk op basis van de REST API, ebXML/ebMS2 en WUS families van standaarden inclusief de daarbij behorende verwante standaarden.
 
 Aan te sluiten overheidsorganisaties hebben aangegeven op een uniforme manier (één stekker) te willen aansluiten aan DigiKoppeling. Organisaties die beschikken over eigen middleware (ESB, broker) kunnen de aansluiting aan DigiKoppeling, de adapters, in het algemeen realiseren via voorzieningen in die middleware.
 
@@ -101,20 +101,13 @@ Een andere eis is dat met name afnemers gebruik kunnen maken van één “stekke
 ### Specificatie van de koppelvlakstandaard
 
 De koppelvlakspecificatie beschrijft de eisen waar de adapters aan moeten
-
 voldoen om interoperabel met elkaar te kunnen communiceren.
-
 DigiKoppeling gaat over logistiek, dus over de envelop en niet over de
-
 inhoud. De hele set info die tezamen nodig is voor een complete generieke
-
 DigiKoppeling koppelvlakdefinitie (Raamwerk Specificatie genoemd)
-
 bestaat uit:
-
-- interfacedefinitie “on the wire”, (voorbeeld)listing van SOAP headers, en
-
-- informatie over velden en hun specifieke inhoud.
+* interfacedefinitie “on the wire”, (voorbeeld)listing van SOAP headers, en
+* informatie over velden en hun specifieke inhoud.
 
 ## Opbouw van dit document
 
