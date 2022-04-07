@@ -16,7 +16,6 @@ Het document is bestemd voor architecten en ontwikkelaars die op basis van DigiK
 
 Digikoppeling is beschreven in een set van documenten. Deze set is als volgt opgebouwd:
 
-
 ![Overzicht van de onderdelen van de Digikoppeling Standaard, de standaard is onderverdeeld in normatieve en ondersteunende onderdelen](media/DK_Specificatie_structuur.svg "Opbouw documentatie Digikoppeling")
 
 
@@ -37,6 +36,11 @@ Digikoppeling is beschreven in een set van documenten. Deze set is als volgt opg
 					<li> <a href="https://publicatie.centrumvoorstandaarden.nl/dk/beveilig/">DK Beveiligingsstandaarden en voorschriften</a>* </li>
 					<li>Koppelvlakstandaarden
 						<ul>
+							<li> <a href="https://publicatie.centrumvoorstandaarden.nl/dk/restapi/">DK Koppelvlakstandaard REST-API</a>*
+								<ul>
+									<li><i>Best-practice REST-API</i>† </li>
+								</ul>
+							</li>
 							<li> <a href="https://publicatie.centrumvoorstandaarden.nl/dk/wus/">DK Koppelvlakstandaard WUS</a>*
 								<ul>
 									<li><i><a href="https://publicatie.centrumvoorstandaarden.nl/dk/bpwus">Best-practice WUS</a></i>† </li>
