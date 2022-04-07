@@ -378,12 +378,6 @@ Het document “Gebruik en achtergrond Digikoppeling-certificaten” bevat waard
 
 Belangrijk is dat niet individuele certificaten van communicatie-partners opgenomen worden in een trust-store. Als dat wel gebeurd zal bij elke certificaat-vernieuwing van deze partner een gelijktijdige aanpassing van de trust-store moeten plaatsvinden. Veel makkelijker is als op basis van een geldige certificaat-hierarchie (root-certificaat van Staat der Nederlanden) controle plaatsvindt. Autorisatie kan vervolgens op basis van een OIN uit dit geldige certificaat ingericht worden.
 
-#### TLS-offloading
-
-Het stelselhandboek ([www.stelselhandboek.nl](http://www.stelselhandboek.nl)) bevat informatie over de inrichting van TLS-offloaders en hoe hiermee OIN’s uit een certificaat gehaald kunnen worden.
-
-Een complicerende factor ten opzichte van berichtenuitwisseling met message-handlers kan zijn dat er sprake kan zijn van meerdere bestandsservers en meerdere clients in de eigen organisatie. Vaak beschikt een organisatie (alleen al vanwege de kosten) niet over meerdere message-handlers; maar meerdere bestandsservers of applicaties die bestanden ophalen is eenvoudiger (en goedkoper) te realiseren. Men kan daarom kiezen om de bestanden rechtstreeks vanuit meerdere (achterliggende) applicaties op te halen en/of aan te bieden (maar hoeft dit niet!). Het stelselhandboek bevat informatie over deze situatie.
-
 ### Server configuration
 
 #### Apache Tomcat
@@ -501,4 +495,3 @@ Als een transparante-intermediair zich bevindt op de rand tussen intern en exter
 1. hetzelfde als alternatief b) maar nu vindt geen 'rewrite' naar een intern ip-adres maar naar een interne (andere) url plaats.
 
     Bij alternatief b) en c) zal de TLS-sessie getermineerd moeten worden om in de proxy de url van het http-protocol te kunnen zien. Controle of de url is toegestaan voor het OIN in dit certificaat zal dan ook door de proxy moeten plaatsvinden danwel de proxy moet dit OIN doorgeven (b.v. met http basic authentication).
-
