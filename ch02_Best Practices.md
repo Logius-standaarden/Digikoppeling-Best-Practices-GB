@@ -2,15 +2,22 @@
 
 ## Inleiding
 
-De situatie kan zich voordoen dat een WUS en/of ebMS2 bericht een grootte krijgt die niet meer efficiënt door de WUS / ebMS2 adapters verwerkt kan worden. Ook kan het zich voordoen dat er behoefte bestaat aan het buiten de normale procesgang ('out-of-band') sturen van aanvullende informatie naar systemen. In die gevallen zal dit “grote bericht” op een andere wijze verstuurd moeten worden: middels de DigiKoppeling Koppelvlakstandaard Grote Berichten.
+De situatie kan zich voordoen dat een Digikoppeling bericht een grootte krijgt die niet meer efficiënt door de Digikoppeling adapters verwerkt kan worden. (meestal is in de praktijk de middleware / servicebus de bottleneck) Ook kan het zich voordoen dat er behoefte bestaat aan het buiten de normale procesgang ('out-of-band') uitwisselen van grote hoeveelheden informatie tussen systemen.
+In die gevallen zal dit “grote bericht” op een andere wijze verstuurd moeten worden: middels de Digikoppeling Koppelvlakstandaard Grote Berichten. De volgende aanpak wordt dan gehanteerd:
 
-De volgende standaard aanpak wordt hierbij gehanteerd:
+- De verzender stelt een bestand samen uit (een deel van) de gegevens die normaliter in het “grote bericht” verzonden zou worden. Het resultaat wordt aangeduid met de term “groot bestand”. Merk op dat dit ook een “groot” xml bestand kan zijn, een CAD bestand, een PDF document, multimedia files, een ZIP bestand, et cetera.
 
-- De verzender stelt een bestand samen uit (een deel van) de gegevens die normaliter in het “grote bericht” verzonden zou worden. Het resultaat wordt aangeduid met de term “groot bestand”. Merk op dat dit ook een “groot” xml bestand kan zijn, een CAD bestand, een PDF document, een ZIP bestand, et cetera.
+- De verzender stelt metadata samen over het grote bestand en deelt deze metadata in een Digikoppeling-bericht [in een zgn. stuurbericht].
 
-- De verzender stelt metadata samen over het grote bestand en verstuurt deze metadata in een WUS- of ebMS2-bericht [in een zgn. stuurbericht]. Merk op dat het stuurbericht naast metadata ook voorzien kan zijn van inhoudelijke informatie die al nodig is bij ontvangst van het bericht voorafgaand aan het nog op te halen grote bestand.
+- Uitwisseling van het grote bestand vindt plaats via een PULL of een PUSH principe.  
+   - Bij Het PULL principe biedt de verzender het groot bestand aan via een Grote Berichten File service aan de ontvanger.  
+   - Bij het PUSH principe stuurt de verzender het groot bestand naar de Grote Berichten File service van de ontvanger.
 
-- De ontvanger haalt het grote bestand op via het gespecificeerde HTTP 1.1 protocol op basis van de verstrekte metadata (zoals in de koppelvlakstandaard is gespecificeerd). De bestandsoverdracht is niet “betrouwbaar”; indien dit wel gewenst is, dient de ontvanger aanvullende maatregelen te implementeren (retry-mechnisme, foutafhandeling). De Koppelvlakstandaard bevat hiervoor handvatten. Toepassing van deze handvatten in concrete implementaties vallen buiten de scope van het koppelvlak.
+- De bestandsoverdracht is niet “betrouwbaar”; hiervoor dient de ontvanger aanvullende maatregelen te implementeren (retry-mechanisme, foutafhandeling). De Koppelvlakstandaard bevat hiervoor handvatten. Toepassing van deze handvatten in concrete implementaties vallen buiten de scope van het koppelvlak.
+
+Merk op dat het stuurbericht naast metadata ook voorzien kan zijn van inhoudelijke informatie die al nodig is bij de verwerking van het bericht.
+
+Dit document beschrijft welke gegevens er in de metadata opgenomen moeten worden en hoe het HTTP 1.1 protocol gebruikt moet worden voor de overdracht van het grote bestand.
 
 De standaard doet geen uitspraak over gegevensstromen waarin kleine en grote berichten voorkomen. Bij implementatie van dergelijke gegevensstromen zal een organisatie moeten afwegen of kleine berichten anders of gelijk aan de ‘echte’ grote berichten verwerkt worden. In z’n algemeenheid zal een uniforme afhandeling eenduidiger en vooral ook eenvoudiger zijn; slechts in bijzondere gevallen zal dit niet volstaan.
 
@@ -18,13 +25,13 @@ De standaard doet geen uitspraak over gegevensstromen waarin kleine en grote ber
 
 Afhankelijk van de situatie zijn verschillende interactiepatronen mogelijk. Deze patronen verschillen qua initiatief en qua aanpak.
 
-### Halen
+### Halen - Pull principe
 
-Er is bij grote berichten sprake van halen, wanneer een groot bestand door de ontvangende partij wordt opgehaald. Voorafgaand aan deze actie dient altijd een meta-bericht verstuurd te worden door de verzender.
+Er is bij grote berichten sprake van halen, wanneer een groot bestand door de ontvangende partij wordt opgehaald. Voorafgaand aan deze actie dient altijd een meta-bericht verstuurd te worden door de verzender. Dit kan met behulp van het REST-API, WUS of ebMS profiel.
 
 #### EbMS2
 
-Bij het Melden van grote hoeveelheden informatie dient van ebMS2 gebruik gemaakt te worden. Met ebMS2 kan de ontvangst van de metadata gegarandeerd worden.
+Bij het Melden van grote hoeveelheden informatie kan van ebMS2 gebruik gemaakt te worden. Met ebMS2 kan de ontvangst van de metadata gegarandeerd worden.
 
 De volgende aanpak is hierbij gebruikelijk:
 
@@ -74,7 +81,13 @@ Toepassingen:
 
 - Opvragen van (afgesloten) log-bestanden.
 
-### Brengen
+#### REST-API
+
+Bij het Bevragen van grote hoeveelheden informatie kan naast ebMS2 en WUS (zie hiervoor) ook van het REST-API profiel gebruik gemaakt worden. Hierbij wordt dan een meta-bericht en een bijbehorende groot bestand gegenereerd. Het meta-bericht wordt als antwoord op het API-request verstuurd via de synchrone response of middels een asynchrone webhook call. Dit kan vervolgens door de ontvanger gebruikt worden om het betreffende grote bestand op te halen.
+
+Afhankelijk van de ingestelde timeouts en de verwachte tijd die nodig is om het grote bericht klaar te zetten dient men te kiezen voor een synchrone response of een asynchrone call naar een webhook.
+
+### Brengen - Push principe
 
 Er is bij grote berichten sprake van brengen, wanneer een groot bestand voorafgaand aan het meta-bericht door de verzender op een afgesproken plaats wordt klaargezet. Aansluitend op deze actie dient altijd een meta-bericht verstuurd te worden door de verzender.
 
@@ -82,15 +95,15 @@ De volgende aanpak wordt hierbij gehanteerd:
 
 - De verzender stelt een groot bestand samen en verstuurt deze via HTTP.
 
-- De verzender stelt de metadata samen en verstuurt deze via ebMS of WUS.
+- De verzender stelt de metadata samen en verstuurt deze via een REST-API, ebMS of WUS bericht.
 
 - De ontvanger verwerkt het grote bestand.
 
-Het brengen interactiepatroon kan niet plaatsvinden op basis van de huidige versie van de koppelvlakstandaard. Het Technisch Overleg Digikoppeling heeft om redenen van veiligheid en gebrek aan behoefte geen uitwerking gegeven aan dit interactiepatroon. De koppelvlakstandaard is wel voorbereid op een toekomstige toevoeging van dit interactiepatroon mocht dit gewenst zijn.
+Het brengen interactiepatroon is in 2020 toegevoegd aan de Koppelvlakstandaard Grote Berichten. Er wordt in algemene zin gesproken over het verzenden van Grote Berichten en het brengen is uitgewerkt door middel van het PUSH principe en het halen door middel van het PULL Principe.
 
 ## Metadata
 
-De metadata beschrijft de informatie over het bestand dat verstuurd wordt met HTTP 1.1. De metadata zelf wordt verzonden via het WUS/ebMS2 Koppelvlak. Ten behoeve van toekomstige vernieuwingen bevat de metadata een versienummer (‘profile’-waarde).
+De metadata beschrijft de informatie over het bestand dat verstuurd wordt met HTTP 1.1. De metadata zelf wordt verzonden via het REST-API, ebMS of WUS Koppelvlak. Ten behoeve van toekomstige vernieuwingen bevat de metadata een versienummer (‘profile’-waarde).
 
 ### Location URL
 
@@ -125,9 +138,10 @@ Voor ieder groot bestand dient een unieke lokale bestandsnaam bepaald te worden.
 Als basis voor lokale bestandsnamen kan ook gebruik gemaakt worden van het bericht-id van de metadata of van de location-url, waarvan voor beide de uniciteit gegarandeerd kan worden. Een andere optie is om zelf een unieke bestandsnaam te genereren, gebruikmakend van de metadata en aangevuld met tenminste één unieke component (bericht-id, location-url of UUID).
 
 Voorbeelden:
->   sample.xml-c3c3281c-e561-4be8-8519-4e9690fb0f08
->   c3c3281c-e561-4be8-8519-4e9690fb0f08.xml
->   https-my.host.nl-f47ac10b-58cc-**4**372-**a**567-0e02b2c3d479
+
+> - sample.xml-c3c3281c-e561-4be8-8519-4e9690fb0f08  
+> - c3c3281c-e561-4be8-8519-4e9690fb0f08.xml  
+> - https-my.host.nl-f47ac10b-58cc-**4**372-**a**567-0e02b2c3d479  
 
 ### Metadata als deel van een bericht
 
@@ -137,7 +151,7 @@ Metadata hoeft niet altijd als een afzonderlijk bericht verzonden te worden. Het
 <?xml version="1.0" encoding="UTF-8"?>
 <embedded-meta xmlns:tns="http://www.logius.nl/digikoppeling/gb-embedded/" xmlns:gb="http://www.logius.nl/digikoppeling/gb/2010/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.logius.nl/digikoppeling/gb/ gb-embedded.xsd ">
 	<andere-data>
-		Hier kan van alles staan, tekst of andere tags .
+		Hier kan van alles staan, tekst of andere tags.
 	</andere-data>
 	<digikoppeling-external-data-references profile="digikoppeling-gb-1.0">
 		<data-reference contextId="1201">
@@ -278,9 +292,7 @@ Niet ieder groot bestand hoeft als een afzonderlijk bericht verzonden te worden.
 
 Door een beperking op te leggen aan de beschikbaarheid wordt voorkomen dat het niet duidelijk is wanneer een bestand weer verwijderd zou mogen worden. Daarom ligt het voor de hand om altijd een expiratiedatum in de metadata op te nemen.
 
-Wanneer echter op een andere wijze duidelijk gemaakt wordt wanneer een bestand verwijderd kan worden, bijvoorbeeld door een terugmelding vanuit de applicatie, dan kan de expiratiedatum
-
-wellicht worden weggelaten.
+Wanneer echter op een andere wijze duidelijk gemaakt wordt wanneer een bestand verwijderd kan worden, bijvoorbeeld door een terugmelding vanuit de applicatie, dan kan de expiratiedatum wellicht worden weggelaten.
 
 Houdt er mee rekening dat een bestandsoverdracht niet binnen een afgesproken tijdsduur of voor expiratie van het bestand voltooid kan worden. Neem voorzorgsmaatregelen door in zo'n geval bijvoorbeeld de overdracht af te breken op basis van een time-out.
 
@@ -290,7 +302,7 @@ In het geval van Digikoppeling Grote Berichten is sprake van minimaal twee uitwi
 
 1. bericht met de meta-data;
 
-1. bestand dat naar aanleiding hiervan opgehaald wordt.
+1. bestand dat naar aanleiding hiervan verzonden wordt.
 
 Het bewaken van de samenhang wordt extra belangrijk als er (tegelijkertijd) meerdere gegevensstromen zijn. Een oplossing verschilt per implementatie en kent algemeen de volgende mogelijkheden:
 
@@ -303,14 +315,13 @@ Het bewaken van de samenhang wordt extra belangrijk als er (tegelijkertijd) meer
 - Contextbewaking met expliciete referentie (ebMS2)  
     In het geval van ebMS2 kan als standaard oplossing een referentie meegegeven worden. Dit kan door deze op te nemen in de contextID van de metadata. Bij voorkeur komt deze overeen met de MessageID of ConversationID van het bericht:
 
-1. Als het bestand specifiek bij één bericht hoort: MessageID
-
-1. Als het bestand bij een conversatie van meerdere berichten hoort of als een conversatie maar één bericht bevat: ConversationID.
+   1. Als het bestand specifiek bij één bericht hoort: MessageID
+   1. Als het bestand bij een conversatie van meerdere berichten hoort of als een conversatie maar één bericht bevat: ConversationID.
 
     Om de oplossing robuuster te maken kan de contextID uit de metadata aanvullend overgenomen worden in het bestand.
 
-- Contextbewaking met expliciete referentie (WUS)  
-    In het geval van synchrone WUS maar ook bij asynchrone WUS (geen Digikoppeling!) kan als standaard oplossing een referentie meegegeven worden. Dit kan bijvoorbeeld door de applicatie de referentie in de body te laten opnemen. Beter is het echter om dit conform Digikoppeling in de header op te nemen. In het request wordt de referentie dan opgenomen in de MessageID van het WUS-request. De service geeft deze MessageID dan terug als 'contextID' in de (synchrone of asynchrone) WUS-response<sup>1</sup>. Om de oplossing robuuster te maken kan de contextID uit de metadata aanvullend overgenomen worden in het bestand.
+- Contextbewaking met expliciete referentie (WUS/REST-API)  
+    In het geval van synchrone uitwisseling maar ook bij asynchrone uitwisseling (geen standaard onderdeel van Digikoppeling WUS of REST-API!) kan als  oplossing een referentie meegegeven worden. Dit kan bijvoorbeeld door de applicatie de referentie in de body te laten opnemen. Beter is het echter om dit conform Digikoppeling in de header op te nemen. In het request wordt de referentie dan opgenomen in de MessageID van het request. De service geeft deze MessageID dan terug als 'contextID' in de (synchrone of asynchrone) response<sup>1</sup>. Om de oplossing robuuster te maken kan de contextID uit de metadata aanvullend overgenomen worden in het bestand.
 
 <sup>1</sup>: Volgens de WUS koppelvlakstandaard zal ook het headerveld “RelatesTo” van de response overeenkomen met het MessageID van het request.
 
@@ -320,15 +331,13 @@ Het bewaken van de samenhang wordt extra belangrijk als er (tegelijkertijd) meer
 
 De bestandsoverdracht is niet “betrouwbaar”; daarom dient de ontvanger een retry mechanisme te implementeren om toch betrouwbaarheid te kunnen afdwingen.
 
-Op basis van het retry mechanisme zal in voorkomende foutsituaties getracht worden om de bestandsoverdracht te hervatten. Hierbij kan het voorkomen dat de bestandsoverdracht telkens wordt onderbroken, maar ook dat bepaalde service tijdelijk niet beschikbaar is (service window).
+Op basis van het retry mechanisme zal in voorkomende foutsituaties getracht worden om de bestandsoverdracht te hervatten. Hierbij kan het voorkomen dat de bestandsoverdracht telkens wordt onderbroken, maar ook dat bepaalde service tijdelijk niet beschikbaar is.
 
 Door het tijdsinterval variabel te maken kan worden voorkomen dat onnodig vaak retries hoeven te worden uitgevoerd, zonder dat hierdoor betrouwbaarheid verloren gaat. Kortere intervallen zijn hierbij zinvol bij onderbrekingen van de bestandsoverdracht, terwijl langere intervallen gebruikt kunnen worden om gaten in de beschikbaarheid te kunnen overbruggen (server uitval, service window, etc.).
 
 Wanneer er fatale fouten geconstateerd worden of wanneer de geldigheidsduur van een bestand verstreken is, dan zijn verdere retries niet zinvol en dient de bestandsoverdracht te worden afgebroken (give-up).
 
-#### Opmerking
-
-De noodzaak van een retry-mechanisme doet geen afbreuk aan de standaard. Ook ebMS2 (betrouwbaar protocol) kent beperkingen in het aantal retries en retry-intervallen.
+> De noodzaak van een retry-mechanisme doet geen afbreuk aan de standaard. Ook ebMS2 (betrouwbaar protocol) kent beperkingen in het aantal retries en retry-intervallen.
 
 ### Foutafhandeling
 
@@ -351,7 +360,7 @@ Belangrijkste foutsituaties bij bestandsoverdracht:
 
 ### OIN en certificaten
 
-Ten behoeve van DigiKoppeling grote berichten dient gebruik gemaakt te worden van OIN gerelateerde certificaten. Alleen verbindingen waarbij zowel de client als de server over een geldig certificaat beschikken zijn toegestaan (TLS). De gebruikte certificaten mogen dezelfde certificaten zijn die al ten behoeve van ebMS2 / WUS geïnstalleerd zijn, maar dit hoeft niet het geval te zijn (zolang het OIN maar overeenkomt).
+Ten behoeve van Digikoppeling grote berichten dient gebruik gemaakt te worden van OIN gerelateerde certificaten. Alleen verbindingen waarbij zowel de client als de server over een geldig certificaat beschikken zijn toegestaan (TLS). De gebruikte certificaten mogen dezelfde certificaten zijn die al ten behoeve van ebMS2 / WUS geïnstalleerd zijn, maar dit hoeft niet het geval te zijn (zolang het OIN maar overeenkomt).
 
 #### Client-zijde
 
@@ -384,7 +393,7 @@ Belangrijk is dat niet individuele certificaten van communicatie-partners opgeno
 
 ##### HTTP connector
 
-Ten behoeve van grote berichten hoeven de http connectors voor DigiKoppeling in principe niet te worden aangepast. Zowel DigiKoppeling als grote berichten maakt gebruikt van client authenticatie en TLS, en ze kunnen derhalve van dezelfde resources gebruik maken (poort 443). Beter is het echter om beide services toch gescheiden te houden en een afzonderlijke logische server in te richten voor grote berichten. Hierdoor kan het berichtenverkeer beter gescheiden worden en kunnen eventuele performance issues beter worden afgehandeld.
+Ten behoeve van grote berichten hoeven de http connectors voor Digikoppeling in principe niet te worden aangepast. Zowel Digikoppeling als grote berichten maakt gebruikt van client authenticatie en TLS, en ze kunnen derhalve van dezelfde resources gebruik maken (poort 443). Beter is het echter om beide services toch gescheiden te houden en een afzonderlijke logische server in te richten voor grote berichten. Hierdoor kan het berichtenverkeer beter gescheiden worden en kunnen eventuele performance issues beter worden afgehandeld.
 
 De nieuwe connector dient in *server.xml* te worden toegevoegd:
 
