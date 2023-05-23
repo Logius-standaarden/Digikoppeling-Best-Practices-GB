@@ -8,7 +8,7 @@ Dit hoofdstuk beschrijft deze use-cases en geeft aan hoe deze gerealiseerd kunne
 
 In deze use case zijn benodigde gegevens al beschikbaar in een download-server. De afnemer dient echter nog de beschikking te krijgen over een referentie naar de gewenste gegevens. Daartoe worden de volgende processtappen doorlopen:
 
-![Use case 'Download'](media/use_case_download.jpeg "Use case 'Download'")
+![Use case 'Download'](media/use_case_download.svg "Use case 'Download'")
 
 - De Afnemer bevraagt (WUS-request of eventueel ebMS2) de Service Provider met kenmerkende criteria voor de gezochte gegevens. Eventueel kan deze bevraging in enkele tussenstappen verlopen als deze initieel teveel mogelijkheden oplevert.
 
