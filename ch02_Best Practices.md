@@ -25,9 +25,9 @@ De standaard doet geen uitspraak over gegevensstromen waarin kleine en grote ber
 
 Afhankelijk van de situatie zijn verschillende interactiepatronen mogelijk. Deze patronen verschillen qua initiatief en qua aanpak.
 
-### Halen - Pull principe
+### Pull principe
 
-Er is bij grote berichten sprake van halen, wanneer een groot bestand door de ontvangende partij wordt opgehaald. Voorafgaand aan deze actie dient altijd een meta-bericht verstuurd te worden door de verzender. Dit kan met behulp van het REST-API, WUS of ebMS profiel.
+Er is bij grote berichten sprake van pull, wanneer een groot bestand door de ontvangende partij wordt opgehaald. Voorafgaand aan deze actie dient altijd een meta-bericht verstuurd te worden door de verzender. Dit kan met behulp van het REST-API, WUS of ebMS profiel.
 
 #### EbMS2
 
@@ -87,19 +87,19 @@ Bij het Bevragen van grote hoeveelheden informatie kan naast ebMS2 en WUS (zie h
 
 Afhankelijk van de ingestelde timeouts en de verwachte tijd die nodig is om het grote bericht klaar te zetten dient men te kiezen voor een synchrone response of een asynchrone call naar een webhook.
 
-### Brengen - Push principe
+### Push principe
 
-Er is bij grote berichten sprake van brengen, wanneer een groot bestand voorafgaand aan het meta-bericht door de verzender op een afgesproken plaats wordt klaargezet. Aansluitend op deze actie dient altijd een meta-bericht verstuurd te worden door de verzender.
+Er is bij grote berichten sprake van push, wanneer een groot bestand voorafgaand aan het meta-bericht door de verzender op een afgesproken plaats wordt klaargezet. Aansluitend op deze actie dient altijd een meta-bericht verstuurd te worden door de verzender.
 
 De volgende aanpak wordt hierbij gehanteerd:
 
 - De verzender stelt een groot bestand samen en verstuurt deze via HTTP.
 
-- De verzender stelt de metadata samen en verstuurt deze via een REST-API, ebMS of WUS bericht.
+- De verzender stelt de metadata samen en verstuurt deze via een REST-API, ebMS2 of WUS bericht.
 
 - De ontvanger verwerkt het grote bestand.
 
-Het brengen interactiepatroon is in 2020 toegevoegd aan de Koppelvlakstandaard Grote Berichten. Er wordt in algemene zin gesproken over het verzenden van Grote Berichten en het brengen is uitgewerkt door middel van het PUSH principe en het halen door middel van het PULL Principe.
+Het push interactiepatroon is in 2020 toegevoegd aan de Koppelvlakstandaard Grote Berichten. Er wordt in algemene zin gesproken over het verzenden van Grote Berichten, dit kan nu dus door middel van het PUSH principe en door middel van het PULL principe.
 
 ## Metadata
 
@@ -360,11 +360,11 @@ Belangrijkste foutsituaties bij bestandsoverdracht:
 
 ### OIN en certificaten
 
-Ten behoeve van Digikoppeling grote berichten dient gebruik gemaakt te worden van OIN gerelateerde certificaten. Alleen verbindingen waarbij zowel de client als de server over een geldig certificaat beschikken zijn toegestaan (TLS). De gebruikte certificaten mogen dezelfde certificaten zijn die al ten behoeve van ebMS2 / WUS geïnstalleerd zijn, maar dit hoeft niet het geval te zijn (zolang het OIN maar overeenkomt).
+Ten behoeve van Digikoppeling grote berichten dient gebruik gemaakt te worden van OIN gerelateerde certificaten. Alleen verbindingen waarbij zowel de client als de server over een geldig certificaat beschikken zijn toegestaan (TLS). De gebruikte certificaten mogen dezelfde certificaten zijn die al ten behoeve van de REST-API / ebMS2 / WUS geïnstalleerd zijn, maar dit hoeft niet het geval te zijn (zolang het OIN maar overeenkomt).
 
 #### Client-zijde
 
-Strik genomen moeten zowel de server als de client controleren op OIN; d.w.z. het OIN uit het certificaat dient overeen te komen met de OIN uit het bericht. In praktijk zal dit voor de client echter niet altijd noodzakelijk zijn. Ook bij ebMS2 en WUS wordt deze controle niet strikt uitgevoerd en bovendien kun je je afvragen waarom de http-client het OIN van de server moet controleren als net daarvoor metadata met een url is ontvangen van een communicatie-partner waarvan het OIN bij de ontvangst van deze meta-data al gecontroleerd is. Bovendien controleert een TLS-client automatisch of het domein van de server overeenkomt met het certificaat.
+Strik genomen moeten zowel de server als de client controleren op correct OIN gebruik. Dit houdt in dat het OIN uit het certificaat dient overeen te komen met de OIN uit het bericht. In praktijk zal dit voor de client echter niet altijd noodzakelijk zijn. Ook bij het profiel wordt deze controle niet strikt uitgevoerd en bovendien kun je je afvragen waarom de http-client het OIN van de server moet controleren als net daarvoor metadata met een url is ontvangen van een communicatie-partner waarvan het OIN bij de ontvangst van deze meta-data al gecontroleerd is. Bovendien controleert een TLS-client automatisch of het domein van de server overeenkomt met het certificaat.
 
 Controle van het OIN uit het certificaat van de (bestands)server aan de client-zijde is daarom vaak niet nodig.
 
@@ -373,7 +373,7 @@ Controle van het OIN uit het certificaat van de (bestands)server aan de client-z
 Controle van het OIN in het client-certificaat is voor vertrouwelijke (niet-openbare) gegevensbestanden noodzakelijk. Hiervoor zijn onder andere de volgende implementaties mogelijk:
 
 1. OIN opnemen in de url  
-    In deze situatie bevat de url waarmee het bestand opgehaald wordt het OIN van de organisatie die dit mag ophalen. In een security-module (zie voorbeeld Apache Tomcat) vindt dan aan de hand van het certificaat controle plaats of een rechtmatige url toegepast wordt.
+    In deze situatie bevat de url waarmee het bestand uitgewisseld wordt het OIN van de organisatie die dit mag uploaden of downloaden. In een security-module (zie voorbeeld Apache Tomcat) vindt dan aan de hand van het certificaat controle plaats of een rechtmatige url toegepast wordt.
 
 1. Autorisatie-database  
     In deze situatie wordt het OIN uit het certificaat vergeleken met autorisaties in een database (zie opmerking in voorbeeld Apache Tomcat). Dit kan bijvoorbeeld nodig zijn omdat meerdere organisaties tot hetzelfde bestand toegang moeten hebben. Een simpele oplossing als hiervoor volstaat dan niet meer.
@@ -383,9 +383,11 @@ Controle van het OIN in het client-certificaat is voor vertrouwelijke (niet-open
 
 #### Certificaat-geldigheid
 
-Het document “Gebruik en achtergrond Digikoppeling-certificaten” bevat waardevolle informatie over dit onderwerp.
+> Het document “Gebruik en achtergrond Digikoppeling-certificaten” bevat waardevolle informatie over dit onderwerp.
 
 Belangrijk is dat niet individuele certificaten van communicatie-partners opgenomen worden in een trust-store. Als dat wel gebeurd zal bij elke certificaat-vernieuwing van deze partner een gelijktijdige aanpassing van de trust-store moeten plaatsvinden. Veel makkelijker is als op basis van een geldige certificaat-hierarchie (root-certificaat van Staat der Nederlanden) controle plaatsvindt. Autorisatie kan vervolgens op basis van een OIN uit dit geldige certificaat ingericht worden.
+
+Het spreekt voor zich dat de gebruikte certificaten worden gecontroleert op geldigheid en revocation.
 
 ### Server configuration
 
@@ -441,7 +443,7 @@ Een veel voorkomende situatie is dat voorgaande use-cases in combinatie met een 
     In deze situatie vindt wel store-and-forward van het grote bestand plaats. Daarom wijzigt de intermediair de meta-data en specifiek de senderUrl waar het bestand opgehaald wordt.
 
 1. Transparante intermediair  
-    In deze situatie vindt geen store-and-foreward van het grote bestand plaats. Daarom geeft de intermediair de meta-data transparant door aan het endpoint van de ontvanger. Het maakt daarbij niet uit of op berichtniveau sprake is van protocol-transformatie (bijvoorbeeld van ebMS naar WUS), zolang de meta-data maar transparant doorgegeven wordt.
+    In deze situatie vindt geen store-and-foreward van het grote bestand plaats. Daarom geeft de intermediair de meta-data transparant door aan het endpoint van de ontvanger. Het maakt daarbij niet uit of op berichtniveau sprake is van protocol-transformatie (bijvoorbeeld van WUS naar REST-API), zolang de meta-data maar transparant doorgegeven wordt.
 
 Merk op dat een niet-transparante intermediair ook protocol-conversie uit kan voeren. Daardoor is het denkbaar dat extern grote berichten volgens de Digikoppeling-standaard Grote Berichten verstuurd worden terwijl op het interne netwerk geen verschil tussen grote en kleine berichten bestaat. In het voorbeeld van Justitie zou JustID ervoor kunnen kiezen om de extern ontvangen grote berichten (na ophalen van het groot bestand) volledig via ebMS2 door te sturen. Dit werkt uiteraard ook omgekeerd, maar dan wordt het ebMS2 bericht gesplitst in een bericht met meta-data en een groot bestand.
 
@@ -451,15 +453,15 @@ In de beschrijving in deze verdere paragraaf gaan we er van uit dat een intermed
 
 Bij Niet-transparante intermediairs is in Digikoppeling-termen de intermediair te zien als een endpoint. De intermediair zal dan ook net als elk ander endpoint het bericht en met name de meta-data en het grote bestand afhandelen.
 
-Afhankelijk van de use-case (zoals in vorige paragrafen beschreven) zal voorafgaand aan verzending van de meta-data nog enkele bericht-uitwisselingen plaatsvinden. Op enig moment zal echter meta-data verzonden worden naar de intermediair. De intermediair haalt vervolgens het bestand op bij de verzender.
+Afhankelijk van de use-case (zoals in volgende paragrafen beschreven) zal voorafgaand aan verzending van de meta-data nog enkele bericht-uitwisselingen plaatsvinden. Op enig moment zal echter meta-data verzonden worden naar de intermediair. De intermediair wisselt vervolgens het bestand uit met de service provider.
 
-In een vervolgstap vindt hetzelfde proces plaats, nu echter met de intermediair die de nieuwe meta-data met het aangepaste senderURL verstuurt naar de uiteindelijke ontvanger (of een volgende intermediair). Bij voorkeur wordt het bericht met de meta-data niet eerder verstuurd dan nadat het grote bestand succesvol is opgehaald bij de oorspronkelijke verzender. Anders kunnen timingsprobleren ontstaan wanneer het intermediair het bestand nog niet (volledig) opgehaald heeft op het moment van ophalen door de uiteindelijke ontvanger.
+In een vervolgstap vindt hetzelfde proces plaats, nu echter met de intermediair die de nieuwe meta-data met het aangepaste senderURL uitwisselt met de uiteindelijke ontvanger (of een volgende intermediair). Bij voorkeur wordt het bericht met de meta-data niet eerder verstuurd dan nadat het grote bestand succesvol is uitgewisseld met de oorspronkelijke verzender. Anders kunnen timingsprobleren ontstaan wanneer het intermediair het bestand nog niet (volledig) uitgewisseld heeft op het moment van uitwisselen met de uiteindelijke ontvanger.
 
 ### Transparant
 
 Bij transparante intermediairs vindt geen tussentijdse opslag van het grote bestand plaats bij de intermediair; verandering van meta-data is niet nodig. Het kan in deze situatie echter soms wel handig of zelfs nodig zijn om de bestandsoverdracht via de intermediair te ontkoppelen met een proxy. Er zijn daarom twee mogelijkheden: zonder proxy of met proxy.
 
-Afhankelijk van de use-case (zoals in vorige paragrafen beschreven) zal ook nu voorafgaand aan verzending van de meta-data nog enkele bericht-uitwisselingen plaatsvinden. Op enig moment zal echter meta-data verzonden worden naar de intermediair. De intermediair geeft de meta-data transparant door aan het endpoint van de ontvanger. Het maakt daarbij niet uit of op berichtniveau sprake is van protocol-transformatie (bijvoorbeeld van ebMS2 naar WUS), zolang de meta-data maar transparant doorgegeven wordt.
+Afhankelijk van de use-case (zoals in volgende paragrafen beschreven) zal ook nu voorafgaand aan verzending van de meta-data nog enkele bericht-uitwisselingen plaatsvinden. Op enig moment zal echter meta-data verzonden worden naar de intermediair. De intermediair geeft de meta-data transparant door aan het endpoint van de ontvanger. Het maakt daarbij niet uit of op berichtniveau sprake is van protocol-transformatie (bijvoorbeeld van REST-API naar WUS), zolang de meta-data maar transparant doorgegeven wordt.
 
 De ontvanger haalt vervolgens het bestand op bij de verzender. Dit kan door de intermediair op twee manieren zijn ingericht:
 
@@ -469,11 +471,11 @@ De ontvanger haalt vervolgens het bestand op bij de verzender. Dit kan door de i
 - met proxy<sup>2</sup>  
     Het bestand wordt door de verzender met een http-bestandsserver beschikbaar gesteld aan de intermediair via bijvoorbeeld een sectoraal netwerk. De intermediair richt een http-(reverse-)proxy in om deze bestandsserver vanaf Diginetwerk of het Internet bereikbaar te maken.
 
-<sup>2</sup>: N.B. Behalve een keuze voor het toepassen van een proxy bij het intermediair kan natuurlijk aanvullend bij verzender en/of vervanger voor een (reverse-)proxy gekozen worden.
+> <sup>2</sup>: N.B. Behalve een keuze voor het toepassen van een proxy bij het intermediair kan natuurlijk aanvullend bij verzender en/of vervanger voor een (reverse-)proxy gekozen worden.
 
 In deze situatie vindt dus geen store-and-foreward van het grote bestand plaats. De senderURL in de meta-data blijft daarom ook ongewijzigd. De verzender dient dus al direct de url te gebruiken waarmee het bestand is op te halen; bijvoorbeeld door een url op basis van het organisatiedomein te gebruiken.
 
-In het geval dat bestanden binnen het interne netwerk door zowel interne als externe partijen opgehaald moeten kunnen worden, vormt netwerk-routering een extra complicatie. Beschrijven van best-practices hiervoor vallen buiten de scope van Digikoppeling, maar globaal is de uitwerking hiervan als volgt:
+In het geval dat bestanden binnen het interne netwerk door zowel interne als externe partijen opgehaald moeten kunnen worden, vormt netwerk-routering een extra complicatie. Beschrijven van best-practices hiervoor vallen buiten de scope van Digikoppeling/Diginetwerk, maar globaal is de uitwerking hiervan als volgt:
 
 - De domeinnaam van de url zal geresolved worden naar een IP-adres van de server waar het bestand staat.
 
@@ -487,20 +489,18 @@ In het geval dat bestanden binnen het interne netwerk door zowel interne als ext
 
 1. één url dat resolved naar het publieke IP-adres van de proxy en deze proxy ook toepassen voor clients op het interne netwerk<sup>3</sup>.
 
-<sup>3</sup>: Soms kan het nodig zijn om de proxy-servers een 'rewrite' van url's te laten uitvoeren.
+> <sup>3</sup>: Soms kan het nodig zijn om de proxy-servers een 'rewrite' van url's te laten uitvoeren.
 
 ## NATting
 
-Als een transparante-intermediair zich bevindt op de rand tussen intern en extern netwerk (b.v. Diginetwerk) is vaak ook vertaling van interne naar externe IP-adressen nodig (NATting). Ook in andere situaties kan dit wenselijk zijn. Dit vraagstuk bevindt zich grotendeels buiten de scope van Diginetwerk. Enkele mogelijkheden om aan te denken zijn:
+Als een transparante-intermediair zich bevindt op de rand tussen intern en extern netwerk (b.v. Diginetwerk) is vaak ook vertaling van interne naar externe IP-adressen nodig (NATting). Ook in andere situaties kan dit wenselijk zijn. Dit vraagstuk bevindt zich grotendeels buiten de scope van Digikoppeling/Diginetwerk. Enkele mogelijkheden om aan te denken zijn:
 
 - Bereikbaarheid van externe file-servers is eenvoudig in te regelen via een constructie met 'default gateway' voor bereikbaarheid van de firewall en NATting door de firewall.
 
 - Bereikbaarheid van interne file-servers voor organisaties op het externe netwerk kent enkele alternatieven:
 
-1. ken elke interne file-server een eigen publiek (b.v. Diginetwerk) IP-adres toe dat door de Firewall geNAT wordt naar een intern IP-adres;
+   1. ken elke interne file-server een eigen publiek (b.v. Diginetwerk) IP-adres toe dat door de Firewall geNAT wordt naar een intern IP-adres;
+   2. gebruik één publiek IP-adres dat gerouteerd wordt naar één gemeenschappelijke reverse-proxy en laat deze proxy afhankelijk van url naar de juiste interne IP-adressen doorrouteren;
+   3. hetzelfde als "alternatief 2." maar nu vindt geen 'rewrite' naar een intern ip-adres maar naar een interne (andere) url plaats.
 
-1. gebruik één publiek IP-adres dat gerouteerd wordt naar één gemeenschappelijke reverse-proxy en laat deze proxy afhankelijk van url naar de juiste interne IP-adressen doorrouteren;
-
-1. hetzelfde als alternatief b) maar nu vindt geen 'rewrite' naar een intern ip-adres maar naar een interne (andere) url plaats.
-
-    Bij alternatief b) en c) zal de TLS-sessie getermineerd moeten worden om in de proxy de url van het http-protocol te kunnen zien. Controle of de url is toegestaan voor het OIN in dit certificaat zal dan ook door de proxy moeten plaatsvinden danwel de proxy moet dit OIN doorgeven (b.v. met http basic authentication).
+> Bij alternatief 2. en 3. zal de TLS-sessie getermineerd moeten worden om in de proxy de url van het http-protocol te kunnen zien. Controle of de url is toegestaan voor het OIN in dit certificaat zal dan ook door de proxy moeten plaatsvinden danwel de proxy moet dit OIN doorgeven (b.v. met http basic authentication).
