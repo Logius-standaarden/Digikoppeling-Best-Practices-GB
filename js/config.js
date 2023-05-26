@@ -29,7 +29,7 @@ var respecConfig = {
   previousPublishVersion: "3.1.1",
   pubDomain: "dk",
   publishDate: "2023-05-16",
-  publishVersion: "3.2",
+  publishVersion: "3.2.0",
   shortName: "bpgb",
   specStatus: "WV",
   specType: "BP"

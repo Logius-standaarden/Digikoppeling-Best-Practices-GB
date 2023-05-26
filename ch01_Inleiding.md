@@ -109,7 +109,7 @@ Een andere eis is dat met name afnemers gebruik kunnen maken van één “stekke
 De koppelvlakspecificatie beschrijft de eisen waar de adapters aan moeten voldoen om interoperabel met elkaar te kunnen communiceren.
 Digikoppeling gaat over logistiek, dus over de envelop en niet over de inhoud. De hele set info die tezamen nodig is voor een complete generieke
 Digikoppeling koppelvlakdefinitie (Raamwerk Specificatie genoemd) bestaat uit:
-* interfacedefinitie (voorbeeld)listing van HTTP eb SOAP headers, en
+* interfacedefinitie (voorbeeld)listing van HTTP en SOAP headers, en
 * semantische informatie over velden en hun specifieke inhoud.
 
 ## Opbouw van dit document

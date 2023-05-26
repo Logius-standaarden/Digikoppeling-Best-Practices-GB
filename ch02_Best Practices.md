@@ -31,7 +31,7 @@ Er is bij grote berichten sprake van pull, wanneer een groot bestand door de ont
 
 #### EbMS2
 
-Bij het Melden van grote hoeveelheden informatie kan van ebMS2 gebruik gemaakt te worden. Met ebMS2 kan de ontvangst van de metadata gegarandeerd worden.
+Bij het Melden van grote hoeveelheden informatie kan van ebMS2 gebruik gemaakt worden. Met ebMS2 kan de ontvangst van de metadata gegarandeerd worden.
 
 De volgende aanpak is hierbij gebruikelijk:
 
@@ -364,7 +364,7 @@ Ten behoeve van Digikoppeling grote berichten dient gebruik gemaakt te worden va
 
 #### Client-zijde
 
-Strik genomen moeten zowel de server als de client controleren op correct OIN gebruik. Dit houdt in dat het OIN uit het certificaat dient overeen te komen met de OIN uit het bericht. In praktijk zal dit voor de client echter niet altijd noodzakelijk zijn. Ook bij het profiel wordt deze controle niet strikt uitgevoerd en bovendien kun je je afvragen waarom de http-client het OIN van de server moet controleren als net daarvoor metadata met een url is ontvangen van een communicatie-partner waarvan het OIN bij de ontvangst van deze meta-data al gecontroleerd is. Bovendien controleert een TLS-client automatisch of het domein van de server overeenkomt met het certificaat.
+Strikt genomen moeten zowel de server als de client controleren op correct OIN gebruik. Dit houdt in dat het OIN uit het certificaat dient overeen te komen met het OIN uit het bericht. In praktijk zal dit voor de client echter niet altijd noodzakelijk zijn. Ook bij het profiel wordt deze controle niet strikt uitgevoerd en bovendien kun je je afvragen waarom de http-client het OIN van de server moet controleren als net daarvoor metadata met een url is ontvangen van een communicatie-partner waarvan het OIN bij de ontvangst van deze meta-data al gecontroleerd is. Bovendien controleert een TLS-client automatisch of het domein van de server overeenkomt met het certificaat.
 
 Controle van het OIN uit het certificaat van de (bestands)server aan de client-zijde is daarom vaak niet nodig.
 
