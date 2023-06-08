@@ -4,7 +4,6 @@ var respecConfig = {
         "uri" : "Digikoppeling-Best-Practices-GB.pdf"
       } ],
   authors: [ { 
-        "mailto" : "digikoppeling@logius.nl",
         "name" : "Logius",
         "url" : "https://logius.nl/standaarden"
       } ],
@@ -12,21 +11,26 @@ var respecConfig = {
       { 
         "company" : "Logius",
         "name" : "Peter Haasnoot",
-        "url" : "https://logius.nl/standaarden"
+        "companyURL" : "https://logius.nl/standaarden"
       },
       { 
         "company" : "Logius",
         "name" : "Pieter Hering",
-        "url" : "https://logius.nl/standaarden"
+        "companyURL" : "https://logius.nl/standaarden"
+      },
+      { 
+        "company" : "Logius",
+        "name" : "Martin van der Plas",
+        "companyURL" : "https://logius.nl/standaarden"
       }
     ],
   github: "https://github.com/Logius-standaarden/Digikoppeling-Best-Practices-GB",
   previousPublishDate: "2017-10-01",
-  previousPublishVersion: "3.1",
+  previousPublishVersion: "3.1.1",
   pubDomain: "dk",
-  publishDate: "2022-04-11",
-  publishVersion: "3.1.1",
+  publishDate: "2023-05-16",
+  publishVersion: "3.2.0",
   shortName: "bpgb",
-  specStatus: "DEF",
+  specStatus: "WV",
   specType: "BP"
 };
