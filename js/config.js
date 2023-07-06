@@ -25,12 +25,12 @@ var respecConfig = {
       }
     ],
   github: "https://github.com/Logius-standaarden/Digikoppeling-Best-Practices-GB",
-  previousPublishDate: "2017-10-01",
+  previousPublishDate: "2022-04-11",
   previousPublishVersion: "3.1.1",
   pubDomain: "dk",
-  publishDate: "2023-05-16",
+  publishDate: "2023-07-07",
   publishVersion: "3.2.0",
   shortName: "bpgb",
-  specStatus: "WV",
+  specStatus: "DEF",
   specType: "BP"
 };
