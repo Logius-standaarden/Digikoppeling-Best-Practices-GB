@@ -1,5 +1,5 @@
 # Digikoppeling Best Practices Grote berichten
 
-- html: https://logius-standaarden.github.io/Digikoppeling-Best-Practices-GB/
-- html(static): https://logius-standaarden.github.io/Digikoppeling-Best-Practices-GB/snapshot.html
-- PDF-versie: https://github.com/Logius-standaarden/Digikoppeling-Best-Practices-GB/blob/master/Digikoppeling-Best-Practices-GB.pdf
+- Werkversie: https://logius-standaarden.github.io/Digikoppeling-Best-Practices-GB/
+- Gepubliceerde versie (HTML): https://gitdocumentatie.logius.nl/publicatie/dk/bpgb
+- Gepubliceerde versie (PDF): https://logius-standaarden.github.io/Digikoppeling-Best-Practices-GB/Digikoppeling-Best-Practices-GB.pdf
