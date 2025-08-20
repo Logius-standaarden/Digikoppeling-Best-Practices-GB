@@ -1,4 +1,6 @@
-var respecConfig = {
+import { loadRespecWithConfiguration } from "https://logius-standaarden.github.io/publicatie/respec/organisation-config.mjs";
+
+loadRespecWithConfiguration({
   alternateFormats: [ { 
         "label" : "pdf",
         "uri" : "Digikoppeling-Best-Practices-GB.pdf"
@@ -33,4 +35,4 @@ var respecConfig = {
   shortName: "bpgb",
   specStatus: "WV",
   specType: "BP"
-};
+});
