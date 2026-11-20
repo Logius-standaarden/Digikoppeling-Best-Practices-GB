@@ -3,23 +3,23 @@ import { loadRespecWithConfiguration } from "https://logius-standaarden.github.i
 loadRespecWithConfiguration({
   authors: [ { 
         "name" : "Logius",
-        "url" : "https://logius.nl/standaarden"
+        "url" : "https://www.logius.nl"
       } ],
   editors: [ 
       { 
         "company" : "Logius",
         "name" : "Peter Haasnoot",
-        "companyURL" : "https://logius.nl/standaarden"
+        "companyURL" : "https://www.logius.nl"
       },
       { 
         "company" : "Logius",
         "name" : "Pieter Hering",
-        "companyURL" : "https://logius.nl/standaarden"
+        "companyURL" : "https://www.logius.nl"
       },
       { 
         "company" : "Logius",
         "name" : "Martin van der Plas",
-        "companyURL" : "https://logius.nl/standaarden"
+        "companyURL" : "https://www.logius.nl"
       }
     ],
   github: "https://github.com/Logius-standaarden/Digikoppeling-Best-Practices-GB",
